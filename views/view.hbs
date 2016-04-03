@@ -1,0 +1,39 @@
+{{#if preview}}
+    <span class="ms-font-xxl">Preview Poll</span>
+{{/if}}
+
+<div id="ViewPoll" class="ms-Grid">
+    <div class="ms-Grid-row">
+        <div class="ms-Grid-col ms-u-sm12 ms-u-lg6">
+            <form id='PollData' method="post">
+            <div class='ms-TextField'>    
+                <p class="ms-font-l">{{questions.body.value.0.question}}</p>
+                <input type="hidden" name="questionId" value="{{questions.body.value.0.RowKey}}" />
+            </div>
+            
+            {{#each answers.body.value}}
+            <div class="answer-container ms-ChoiceField">
+                <input id="Radio{{@index}}" type='radio' name='answers' value="{{answer}}|{{RowKey}}">
+                    {{answer}}
+                </input>
+            </div>
+            {{/each}}
+            
+            <div class="button-container">
+                <button class="ms-Button ms-Button--primary submit-response" type="submit">Submit Response</button>
+            </div>              
+            </form>               
+        </div>
+        
+        <div class="ms-Grid-col ms-sm-12 ms-u-lg6">
+                <div id="PollResults" class="hide"></div>
+        </div>
+        
+        <div id="PollButtons" class="ms-Grid-col ms-u-sm12 ms-u-lg6 button-container hide">
+        {{#if preview}}
+            <button class="ms-Button back" type="button">Back</button>     
+            <button class="ms-Button ms-Button--primary insert-poll" type="submit">Insert Poll</button>
+        {{/if}}
+        </div>
+    </div>
+ </div>

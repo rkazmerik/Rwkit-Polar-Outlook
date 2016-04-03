@@ -79,21 +79,6 @@ module.exports = {
         });
     },
     
-    deleteResponse : function(responseId, callback){
-        var entity = {
-            PartitionKey: entGen.String("Response"),
-            RowKey: entGen.String(responseId)
-        };    
-        
-        tableService.deleteEntity(tableId, entity, function(error, result, response) {
-            if(!error){
-                callback(response);
-            } if (error) {
-                onError(error, callback);
-            }
-        });
-    },
-    
     deleteResponsesByEntity : function(entityId, callback){
         var batch = new azure.TableBatch();
         

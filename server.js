@@ -8,20 +8,15 @@ var http = require('http');
 var https = require('https');
 
 //required route script files
-var answer = require('./routes/answer');
 var poll = require('./routes/poll');
-var question = require('./routes/question');
-var response = require('./routes/response');
-var root = require('./routes/root');
-var survey = require('./routes/survey');
 
 var https_options = {
   key: fs.readFileSync('./certs/localhost-key.pem'),
   cert: fs.readFileSync('./certs/localhost-cert.pem')
 };
 
-var port = process.env.PORT || 8080;
-var sslPort = 8888;
+var port = process.env.PORT || 8081;
+var sslPort = 8443;
     
 var app = express();
 app.engine('hbs', hbs( {
@@ -47,13 +42,9 @@ console.log('HTPPS Server listening on PORT:', sslPort);
 console.log('+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+');
 
 //routes for default path, scripts, styles and images
-app.use('/', root);
-app.use('/answers', answer);
-app.use('/polls', poll);
-app.use('/questions', question);
-app.use('/responses', response);
-app.use('/surveys', survey);
+app.use('/', poll);
 app.use('/scripts', express.static(__dirname + '/scripts'));
 app.use('/styles', express.static(__dirname + '/styles'));
 app.use('/images', express.static(__dirname + '/images'));
-app.use('/manifest', express.static(__dirname + '/manifest'));
+app.use('/views', express.static(__dirname + '/views'));
+app.use('/manifest', express.static(__dirname + '/manifest'));  

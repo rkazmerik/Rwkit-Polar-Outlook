@@ -71,22 +71,6 @@ module.exports = {
             }
         });
     },
-    
-    deleteEntity : function(entityId, entityType, callback){
-        
-        var entity = {
-            PartitionKey: entGen.String(entityType),
-            RowKey: entGen.String(entityId)
-        };
-        
-        tableService.deleteEntity(tableId, entity, function(error, response){
-            if(!error){
-                callback(response);
-            } if (error) {
-                onError(error, callback);
-            }
-        });
-    }
 };
 
 //PRIVATE FUNCTIONS

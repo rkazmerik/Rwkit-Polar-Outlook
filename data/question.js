@@ -82,21 +82,6 @@ module.exports = {
             }
         });
     },
-    
-    deleteQuestion : function(questionId, callback){    
-        var question = {
-            PartitionKey: entGen.String("Question"),
-            RowKey: entGen.String(questionId)
-        };
-        
-        tableService.deleteEntity(tableId, question, function(error, response){
-            if(!error){
-                callback(response);
-            } if (error) {
-                onError(error, callback);
-            }
-        });
-    },
 
     deleteQuestionsByEntity : function(entityId, callback){
         var batch = new azure.TableBatch();

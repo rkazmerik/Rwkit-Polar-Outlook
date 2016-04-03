@@ -9,23 +9,28 @@
 
 /** MASTER LAYOUT **/
 body{
-    margin:0;
+    padding:20px;
 }
 #Main-Content {
-    padding:0px 10px 5px 10px;
+    margin:0;
+    padding:0;
 }
-.logo{
-	margin-top:1px;
-    height:35px;
+#CreatePoll{
+    margin-top:20px;
 }
-	.logo-text{
-		position:relative;
-		top:-10px;
-		margin-right:30px;
-	}
-.settings{
-	padding-top:9px;
-	font-size:20px;
+#EditPoll{
+    margin-top:20px;
+}
+#PollResults{
+    margin-top:50px;
+}
+/** VIEW: REDIRECT **/
+#Redirect-Progress{
+    width: 40px;
+    margin-left:auto;
+    padding-left:9px;
+    margin-right:auto;
+    margin-top:134px;
 }
 
 /** CONTROLS **/
@@ -41,15 +46,28 @@ textarea{
 	width:258px!important;
 }
 .ms-ChoiceField{
-	min-height:25px;
+	min-height:27px;
+}
+.answer-container{
+    padding-left:20px;
 }
 .button-container{
-	float:right;
-	margin-top:5px;
+    margin-top:20px;
+    width:100%;
 }
 .ms-Button--primary{
     color:white;
 }
+    .submit-response{
+        width:100%;
+        max-width:200px;
+    }
+    .insert-poll{
+        width:48%;
+    }
+    .back{
+        width:48%;
+    }
 .jscolor{
 	border:none;
 	width:50px;
@@ -58,25 +76,9 @@ textarea{
     margin-left:-10px;
 }
 
-/** MS NAV BAR **/
-.ms-NavBar{
-	margin-bottom:20px;	
-}
-.search-box{
-	background-color:white!important;
-	position:relative;
-	top:-1px;
-	left:20px;
-	padding-right:30px;
-	border:1pt solid silver!important;
-}
-
 /** DONUT CHART **/
-#donutTitle{
-    margin-bottom:20px;
-}
 #donutChart{
-    margin-bottom:20px;
+    margin-top:20px;
 }
 .tooltip {
 	display: none;

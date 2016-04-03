@@ -1,0 +1,124 @@
+<script src="/../scripts/vendor/jscolor.min.js" type="text/javascript"></script>
+    
+<span class="ms-font-xxl">Edit Poll</span>
+ 
+	<div id="EditPoll" class="ms-Grid">
+	<div class="ms-Grid-row">
+		<div class="ms-Grid-col">
+		<form method="post">
+            <input name="entityId" type="hidden" value="{{poll.body.value.0.RowKey}}" />
+			<div class="ms-TextField is-required">
+				<label class="ms-Label">Poll Title:</label>
+				<input id="PollTitle" class="ms-TextField-field is-required" type="text" name="title" size="62" value="{{poll.body.value.0.title}}">
+			</div>
+	 
+			<div class="ms-TextField is-required">
+                <input name="questionId[]" type="hidden" value="{{questions.body.value.0.RowKey}}" />
+				<label class="ms-Label">Question:</label>
+                <textarea id="PollQuestion" class="ms-TextField-field is-required" name="questions[]">{{questions.body.value.0.question}}</textarea>
+			</div>
+	
+    		<div class="ms-TextField is-required">
+				<label class="ms-Label">Answers:</label>
+			</div>
+	
+            <div id="Answers">
+                {{#each answers.body.value}} 
+                <div class="ms-Grid-row">
+                    <div class="ms-Grid-col">
+                        <div class="ms-TextField is-required">
+                            <input class="ms-TextField-field is-required" name="answers" value="{{answer}}"></input>
+                            <input type="hidden" name="answerId" value="{{RowKey}}" />
+                        </div> 
+                        <input name="totals" type="hidden" value="{{totals}}" />
+                    </div>
+                    <div class="ms-Grid-col">
+                        <div class="ms-TextField is-required">
+                            <input class="jscolor" value="{{color}}" name="colors">
+                        </div>    
+                    </div>
+                </div>
+                {{/each}}
+                
+                <div class="ms-Grid-row" hidden="hidden" disabled="true">
+                    <div class="ms-Grid-col">
+                        <div class="ms-TextField is-required">
+                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                            <input class="total" name="totals" type="hidden" value="0" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="ms-Grid-col">
+                        <input class="jscolor" value="500778" name="colors" disabled="disabled">
+                        <a class="remove-answer"><i class="ms-Icon ms-Icon--x" aria-hidden="true"></i></a>
+                    </div>
+                </div><div class="ms-Grid-row" hidden="hidden">
+                    <div class="ms-Grid-col">
+                        <div class="ms-TextField is-required">
+                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                            <input class="total" name="totals" type="hidden" value="0" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="ms-Grid-col">
+                        <input class="jscolor" value="FFCD00" name="colors" disabled="disabled">
+                        <a class="remove-answer"><i class="ms-Icon ms-Icon--x" aria-hidden="true"></i></a>
+                    </div>
+                </div><div class="ms-Grid-row" hidden="hidden">
+                    <div class="ms-Grid-col">
+                        <div class="ms-TextField is-required">
+                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                            <input class="total" name="totals" type="hidden" value="0" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="ms-Grid-col">
+                        <input class="jscolor" value="41B6E6" name="colors" disabled="disabled">
+                        <a class="remove-answer"><i class="ms-Icon ms-Icon--x" aria-hidden="true"></i></a>
+                    </div>
+                </div><div class="ms-Grid-row" hidden="hidden">
+                    <div class="ms-Grid-col">
+                        <div class="ms-TextField is-required">
+                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                            <input class="total" name="totals" type="hidden" value="0" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="ms-Grid-col">
+                        <input class="jscolor" value="003A70" name="colors" disabled="disabled">
+                        <a class="remove-answer"><i class="ms-Icon ms-Icon--x" aria-hidden="true"></i></a>
+                    </div>
+                </div><div class="ms-Grid-row" hidden="hidden">
+                    <div class="ms-Grid-col">
+                        <div class="ms-TextField is-required">
+                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                            <input class="total" name="totals" type="hidden" value="0" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="ms-Grid-col">
+                        <input class="jscolor" value="046A48" name="colors" disabled="disabled">
+                        <a class="remove-answer"><i class="ms-Icon ms-Icon--x" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <div class="ms-Grid-row" hidden="hidden">
+                    <div class="ms-Grid-col">
+                        <div class="ms-TextField is-required">
+                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                            <input class="total" name="totals" type="hidden" value="0" disabled="disabled" />
+                        </div>
+                    </div>
+                    <div class="ms-Grid-col">
+                        <input class="jscolor" value="53565A" name="colors" disabled="disabled">
+                        <a class="remove-answer"><i class="ms-Icon ms-Icon--x" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+	        </div>
+            <div class="add-answer-container">
+                <button id="AddAnswerInput" class="ms-Button ms-Button--command" type="button">
+                    <i class="ms-Icon ms-Icon--circlePlus ms-Icon-2x"></i>
+                    Add Answer
+                </button>
+		    </div>
+            <div class="button-container">
+                <button class="ms-Button ms-Button--primary" type="submit">Update</button>
+                </form>
+           </div>
+	    </div>
+    </div>
+</div>

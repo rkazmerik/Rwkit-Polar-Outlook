@@ -19,7 +19,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://localhost:8443/polls" />
+        <SourceLocation DefaultValue="https://localhost:8443/polls/view" />
         <RequestedHeight>300</RequestedHeight>
       </DesktopSettings>
     </Form>
