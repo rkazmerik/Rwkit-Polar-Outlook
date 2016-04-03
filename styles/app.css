@@ -1,0 +1,131 @@
+/** MS ICONS **/
+.ms-Icon-2x{font-size:20px;}
+.ms-Icon-3x{font-size:25px;}
+.ms-Icon-4x{font-size:30px;}
+.ms-Icon-5x{font-size:35px;}
+.ms-Icon-6x{font-size:40px;}
+.ms-Icon-7x{font-size:45px;}
+.ms-Icon-8x{font-size:50px;}
+
+/** MASTER LAYOUT **/
+body{
+    padding:20px;
+}
+#Main-Content {
+    margin:0;
+    padding:0;
+}
+#CreatePoll{
+    margin-top:20px;
+}
+#EditPoll{
+    margin-top:20px;
+}
+#PollResults{
+    margin-top:50px;
+}
+/** VIEW: REDIRECT **/
+#Redirect-Progress{
+    width: 40px;
+    margin-left:auto;
+    padding-left:9px;
+    margin-right:auto;
+    margin-top:134px;
+}
+
+/** CONTROLS **/
+a{
+	text-decoration: none;
+	color:#106EBE;
+}
+.hide{
+	display:none;
+}
+textarea{
+	height:80px!important;
+	width:258px!important;
+}
+.ms-ChoiceField{
+	min-height:27px;
+}
+.answer-container{
+    padding-left:20px;
+}
+.button-container{
+    margin-top:20px;
+    width:100%;
+}
+.ms-Button--primary{
+    color:white;
+}
+    .submit-response{
+        width:100%;
+        max-width:200px;
+    }
+    .insert-poll{
+        width:48%;
+    }
+    .back{
+        width:48%;
+    }
+.jscolor{
+	border:none;
+	width:50px;
+	height:30px;
+	text-align: center;
+    margin-left:-10px;
+}
+
+/** DONUT CHART **/
+#donutChart{
+    margin-top:20px;
+}
+.tooltip {
+	display: none;
+	text-align: center;
+	z-index: 10;
+}
+.legend{
+	word-break: break-all;
+}
+rect {
+	cursor: pointer;                                           
+	stroke-width: 1;
+}
+rect.disabled {                                              
+	fill: transparent !important;                              
+}   
+
+/** NOTIFICATION AREA **/
+#notification-message {
+    background-color: #818285;
+    color: #fff;
+    position: absolute;
+    width: 100%;
+    min-height: 80px;
+    right: 0;
+    z-index: 100;
+    bottom: 0;
+    display: none; /* Hidden until invoked */
+}
+
+#notification-message-header {
+    font-size: medium;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+#notification-message-body {
+    color: #fff;
+}
+
+#notification-message-close {
+    background-image: url("../Images/Close.png");
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+}
