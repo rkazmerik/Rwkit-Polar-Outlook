@@ -1,0 +1,43 @@
+<script src="/../scripts/vendor/jscolor.min.js" type="text/javascript"></script>
+    
+	<div class="ms-Grid">
+	<div class="ms-Grid-row"></div>
+	<div class="ms-Grid-row">
+		<div class="ms-Grid-col">
+			<form method="post">
+            <input name="entityId" type="hidden" value="{{survey.body.value.0.RowKey}}" />
+			<div class="ms-TextField is-required">
+				<label class="ms-Label">Survey Title:</label>
+				<input id="SurveyTitle" class="ms-TextField-field is-required" type="text" name="title" size="62" value="{{survey.body.value.0.title}}">
+			</div>
+		</div>
+	</div>
+	
+    {{#each questions.body.value}}
+	<div class="ms-Grid-row">
+		<div class="ms-Grid-col">
+			<div class="ms-TextField is-required">
+                <input name="questionId[]" type="hidden" value="{{this.RowKey}}" />
+				<label class="ms-Label">Question:</label>
+                <textarea id="PollQuestion" class="ms-TextField-field is-required" name="questions[]">{{this.question}}</textarea>
+			</div>
+		</div>
+	</div>
+	{{/each}}
+	
+    <div class="ms-Grid-row">
+		<div class="ms-Grid-col">
+			<a href="">
+				<button id="AddQuestionInput" class="ms-Button" type="button">Add Question</button>
+			</a>
+		</div>
+	</div>
+	
+	<div class="ms-Grid-row">
+		<div class="ms-Grid-col button-container">
+	       <button class="ms-Button" type="submit">Save</button>
+		</form>
+		</div>
+	</div>
+
+</div>

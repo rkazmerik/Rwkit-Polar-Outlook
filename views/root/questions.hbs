@@ -1,0 +1,32 @@
+<div class="ms-Grid ">
+    <div class="ms-Grid-row">
+        <span class="ms-Grid-col ms-u-lg12">    
+          <div class="ms-Table">
+            <div class="ms-Table-row">
+              <span class="ms-Table-rowCheck"></span>
+              <span class="ms-Table-cell">Entity ID</span>
+              <span class="ms-Table-cell">Question ID</span>
+              <span class="ms-Table-cell">Question</span>
+              <span class="ms-Table-cell icon-col">Modified</span>
+              <span class="ms-Table-cell icon-col">Delete</span>
+            </div>
+            
+            {{#each body.value}}
+              <div class="ms-Table-row">
+                <span class="ms-Table-rowCheck"></span>
+                <span class="ms-Table-cell">{{entityId}}</span>
+                <span class="ms-Table-cell">{{RowKey}}</span>
+                <span class="ms-Table-cell">{{question}}</span>
+                <span class="ms-Table-cell date-field">{{Timestamp}}</span>
+                <span class="ms-Table-cell">
+                  <a class="delete-row" href="/questions/delete/{{RowKey}}">
+                    <i class="ms-Icon ms-Icon--trash"></i>
+                  </a>
+                </span>
+              </div>
+            {{/each}}
+          </div>
+        </span>
+    </div>
+</div>
+

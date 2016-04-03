@@ -1,0 +1,43 @@
+<style>
+.ms-NavBar{
+    display:none;
+}
+</style>    
+
+<p class="ms-font-xxl">Preview Poll</p>
+
+{{#if mode}}
+<span class='ms-font-s'>Below is a preview of the poll your recipients will see in this
+    email, just below the message body.
+</span>
+{{/if}} 
+           
+<form id='Poll' method="post">
+<div class="ms-Grid">
+    <div class="ms-Grid-row">
+        <span class="ms-Grid-col">    
+            <p class="ms-font-l">{{questions.body.value.0.question}}</p>
+            <input type="hidden" name="questionId" value="{{questions.body.value.0.RowKey}}" />
+        </span>
+    </div>
+    {{#each answers.body.value}}
+        <div class="ms-Grid-row ms-ChoiceField">
+            <span class="ms-Grid-col">
+                <input id="Radio{{@index}}" type='radio' name='answers' value="{{answer}}|{{RowKey}}">
+                    {{answer}}
+                </input>
+            </span>    
+        </div>
+    {{/each}}
+    <div class="ms-Grid-row button-container">
+        <span class="ms-Grid-col"> 
+            {{#if mode}}
+                <a href="/polls/edit/{{poll.body.value.0.RowKey}}">
+                    <button class="ms-Button" type="button">Back</button>
+                </a>     
+            {{/if}}
+            <button class="ms-Button ms-Button--primary" type='submit'>Submit</button>
+        </span>
+    </div> 
+ </div>
+ </form>

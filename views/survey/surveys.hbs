@@ -1,0 +1,56 @@
+<div class="ms-Grid ">
+
+    <div class="ms-Grid-row">
+        <span class="ms-Grid-col ms-u-lg12">    
+          <div class="ms-Table">
+            <div class="ms-Table-row">
+              <span class="ms-Table-rowCheck"></span>
+              <span class="ms-Table-cell">Title</span>
+              <span class="ms-Table-cell">Created</span>
+              <span class="ms-Table-cell">Modified</span>
+              <span class="ms-Table-cell icon-col">Responses</span>
+              <span class="ms-Table-cell icon-col">Chart</span>
+              <span class="ms-Table-cell icon-col">Edit</span>
+              <span class="ms-Table-cell icon-col">Delete</span>
+            </div>
+            
+            {{#each body.value}}
+              <div class="ms-Table-row">
+                <span class="ms-Table-rowCheck" data-pollId="{{RowKey}}"></span>
+                <span class="ms-Table-cell">
+                  <a href="/surveys/view/{{RowKey}}">{{title}}</a>
+                </span>
+                <span class="ms-Table-cell date-field">{{dateCreated}}</span>
+                <span class="ms-Table-cell date-field">{{Timestamp}}</span>
+                <span class="ms-Table-cell">
+                  <a href="/surveys/{{RowKey}}/responses">
+                    <i class="ms-Icon ms-Icon--listBullets ms-Icon-2x"></i></a>
+                </span>
+                <span class="ms-Table-cell">
+                  <a href="/surveys/{{RowKey}}/chart">
+                  <i class="ms-Icon ms-Icon--chart ms-Icon-2x"></i></a>
+                </span>
+                <span class="ms-Table-cell">
+                  <a href="/surveys/edit/{{RowKey}}">
+                    <i class="ms-Icon ms-Icon--editBox ms-Icon-2x"></i></a>
+                </span>
+                <span class="ms-Table-cell">
+                  <a class="delete-row" href="/surveys/delete/{{RowKey}}">
+                    <i class="ms-Icon ms-Icon--trash ms-Icon-2x"></i>
+                  </a>
+                </span>
+              </div>
+            {{/each}}
+          </div>
+        </span>
+    </div>
+    
+    <div class="ms-Grid-row">
+        <span class="ms-Grid-col button-container">    
+            <a id="CreateSurveyLink" href='/surveys/create'>
+              <button class="ms-Button">Create Survey</button>
+            </a>
+        </span>
+    </div>    
+</div>
+

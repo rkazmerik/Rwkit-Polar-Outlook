@@ -1,0 +1,43 @@
+<style>
+.ms-NavBar{
+    display:none;
+}
+</style> 
+
+<p class="ms-font-xxl">Insert Poll</p>
+
+<div class="ms-Grid">
+	<div class="ms-Grid-row">
+		<div class="ms-Grid-col ms-u-sm12">
+            <span class='ms-font-s'>You're almost done! Review your new poll below 
+                and click to insert. Polar will generate a link that will open 
+                the poll when a user reads this email.
+            </span>
+        </div>
+    </div>
+    <br/>
+    <div class="ms-Grid-row">
+		<div class="ms-Grid-col ms-u-sm12">
+            <span class='ms-font-l'>
+                <i class="ms-Icon ms-Icon--noteEdit ms-Icon-2x ms-fontColor-themeDarkAlt"></i>
+                {{body.value.0.title}}
+            </span>
+            <span class="button-container">
+                <a class="delete-row" href="/polls/delete/{{body.value.0.RowKey}}">
+                    <i class="ms-Icon ms-Icon--trash ms-Icon-2x"></i>
+                </a>
+            </span>
+        </div>
+    </div>
+    <br/>
+    <div class="ms-Grid-row">   
+        <div class="ms-Grid-col button-container">
+            <a href="/polls/chart/{{body.value.0.RowKey}}">
+				<button class="ms-Button" type="button">Back</button>
+			</a>
+            <button id="InsertPoll" class="ms-Button ms-Button--primary" type="submit">Insert Poll</button>
+        </div>
+    </div>   
+</div>
+
+

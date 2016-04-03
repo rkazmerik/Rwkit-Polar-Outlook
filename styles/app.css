@@ -1,0 +1,129 @@
+/** MS ICONS **/
+.ms-Icon-2x{font-size:20px;}
+.ms-Icon-3x{font-size:25px;}
+.ms-Icon-4x{font-size:30px;}
+.ms-Icon-5x{font-size:35px;}
+.ms-Icon-6x{font-size:40px;}
+.ms-Icon-7x{font-size:45px;}
+.ms-Icon-8x{font-size:50px;}
+
+/** MASTER LAYOUT **/
+body{
+    margin:0;
+}
+#Main-Content {
+    padding:0px 10px 5px 10px;
+}
+.logo{
+	margin-top:1px;
+    height:35px;
+}
+	.logo-text{
+		position:relative;
+		top:-10px;
+		margin-right:30px;
+	}
+.settings{
+	padding-top:9px;
+	font-size:20px;
+}
+
+/** CONTROLS **/
+a{
+	text-decoration: none;
+	color:#106EBE;
+}
+.hide{
+	display:none;
+}
+textarea{
+	height:80px!important;
+	width:258px!important;
+}
+.ms-ChoiceField{
+	min-height:25px;
+}
+.button-container{
+	float:right;
+	margin-top:5px;
+}
+.ms-Button--primary{
+    color:white;
+}
+.jscolor{
+	border:none;
+	width:50px;
+	height:30px;
+	text-align: center;
+    margin-left:-10px;
+}
+
+/** MS NAV BAR **/
+.ms-NavBar{
+	margin-bottom:20px;	
+}
+.search-box{
+	background-color:white!important;
+	position:relative;
+	top:-1px;
+	left:20px;
+	padding-right:30px;
+	border:1pt solid silver!important;
+}
+
+/** DONUT CHART **/
+#donutTitle{
+    margin-bottom:20px;
+}
+#donutChart{
+    margin-bottom:20px;
+}
+.tooltip {
+	display: none;
+	text-align: center;
+	z-index: 10;
+}
+.legend{
+	word-break: break-all;
+}
+rect {
+	cursor: pointer;                                           
+	stroke-width: 1;
+}
+rect.disabled {                                              
+	fill: transparent !important;                              
+}   
+
+/** NOTIFICATION AREA **/
+#notification-message {
+    background-color: #818285;
+    color: #fff;
+    position: absolute;
+    width: 100%;
+    min-height: 80px;
+    right: 0;
+    z-index: 100;
+    bottom: 0;
+    display: none; /* Hidden until invoked */
+}
+
+#notification-message-header {
+    font-size: medium;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+#notification-message-body {
+    color: #fff;
+}
+
+#notification-message-close {
+    background-image: url("../Images/Close.png");
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+}
