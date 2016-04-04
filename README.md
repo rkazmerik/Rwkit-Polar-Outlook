@@ -8,7 +8,6 @@
 
 ##Routes
 /polls
-/polls/start
 /polls/view/:pollId
 /polls/create
 /polls/edit/:pollId
