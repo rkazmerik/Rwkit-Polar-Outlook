@@ -48,13 +48,21 @@
                 if(app.getParameterByName('mode') == 'preview') {
                     $.get('../views/helpers/preview.hbs', function(html){
                         app.showNotification('',html);
+                        
+                        if($("#PollResults").is(":visible")){
+                            $("#PreviewChart").slideToggle('slow');
+                        } else {
+                            $("#PreviewPoll").slideToggle('slow');
+                        }
                     });
                 }
             });
             
             //on poll submit
-            $("#PollData").submit(function (event) {
+            $("#PollData").unbind().submit(function (event) {
                 event.preventDefault();
+                console.log("Submitting");
+                
                 var pollId = ($("#PollId").val());
                 if (!$("input[name='answers']:checked").val()) {
                     $(".ms-validation").html("*At least one response in required");
@@ -67,20 +75,26 @@
                         success: function(data){
                             $(".ms-validation").hide();
                             $("#PollResults").html(data);
-                            $("#PollResults").fadeIn(500);
-                            $("#PollButtons").toggle();
+                            $("#PollResults").slideDown('slow');
+                            $("#PollButtons").slideDown('slow');
                         }
                     }); 
                 }
             });
 
             //insert poll into email body
-            $("#InsertPoll").click(function (event) {
-                Office.context.mailbox.item.body.setSelectedDataAsync(
-                    '<a id="LPNoLP" href="http://www.contoso.com" onClick="alert()">Clicky here!</a>',                    
-                    { coercionType: Office.CoercionType.Html });
+            $("#InsertPollButton").unbind().click(function (event) {
+                event.preventDefault();
+                var pollId = $("#PollId").val();
+                //reset the poll
+                $.get('/reset/'+pollId, function(){
+                    //insert the poll into the email
+                    //Office.context.mailbox.item.body.setSelectedDataAsync(
+                    //    '<a id="LPNoLP" href="http://www.contoso.com" onClick="alert()">Clicky here!</a>',                    
+                    //    { coercionType: Office.CoercionType.Html });
+                    //});
+                });
             });
-
             
     
         });    

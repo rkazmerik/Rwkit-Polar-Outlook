@@ -21,7 +21,9 @@ body{
     left:-10px;
 }
 #EditPoll{
-    margin-top:20px;
+    position:relative;
+    top:60px;
+    left:-10px;
 }
 #ViewPoll{
     position:relative;
@@ -42,13 +44,13 @@ body{
     width:100%;
     margin-bottom:50px;
 }
-.view-icon{
-    
+.rocket{
+    height:35px;
+    margin-bottom: -7px;       
 }
-    .rocket{
-        height:35px;
-        margin-bottom: -7px;       
-    }
+.back{
+    cursor:pointer;
+}
 
 /** VIEW: REDIRECT **/
 #Redirect-Progress{
@@ -96,9 +98,6 @@ textarea{
     .insert-poll{
         width:48%;
         margin-top:10px;
-    }
-    .back{
-        width:48%;
     }
 .jscolor{
 	border:none;

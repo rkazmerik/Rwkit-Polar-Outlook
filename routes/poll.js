@@ -107,7 +107,7 @@ router.post('/edit/:RowKey', function (req, res) {
             
             //update the answers
             data.answer.editAnswers(req.body, function(){
-                res.redirect('/view/'+pollId);
+                res.redirect('/view/'+pollId+'?mode=preview');
             });
         });
     });
@@ -132,6 +132,25 @@ router.get('/chart/:pollId', function (req, res) {
                     res.render('chart', pollObj); 
                 });
             })            
+        });
+});
+
+//route for resetting a poll (delete responses and reset totals)
+router.get('/reset/:pollId', function (req, res) {
+        var pollId = req.params.pollId;
+        var pollObj = {};
+        
+        data.response.deleteResponsesByEntity(pollId, function (resp) {
+            
+            //get each answer
+            data.answer.getAnswersByEntity(pollId, function (answers) {
+                for(i=0; i<answers.body.value.length; i++) {
+                    pollObj["answerId"] = answers.body.value[i].RowKey;
+                    data.answer.updateTally(pollObj, "reset", function(resp){
+                        res.end();        
+                    });
+                }    
+            });
         });
 });
 

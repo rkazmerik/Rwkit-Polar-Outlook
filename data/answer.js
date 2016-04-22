@@ -82,7 +82,7 @@ module.exports = {
     editAnswers : function(answerInfo, callback) {         
         var batch = new azure.TableBatch();
         var noAnswers = answerInfo.answers.length;
-            
+            console.log(answerInfo);
             for(i=0; i<noAnswers; i++){
                 var entity = {
                     PartitionKey: entGen.String("Answer"),
@@ -103,20 +103,24 @@ module.exports = {
     },
     
     updateTally : function(responseObj, operator, callback) {
+        
         module.exports.getAnswerById(responseObj.answerId, function (resp) {
-             
+            
+            var answerId = resp.body.value[0].RowKey;
             var newTally = resp.body.value[0].tally;
             if(operator == "add")
                 newTally++;
             if(operator == "sub")
                 newTally--;
-            
+            if(operator == "reset")
+                newTally = 0;
+
             var entity = {
                 PartitionKey: entGen.String("Answer"),
-                RowKey: entGen.String(responseObj.answerId),
+                RowKey: entGen.String(answerId),
                 tally: entGen.Int32(newTally)
             };
-    
+            
             tableService.mergeEntity(tableId, entity, function (error, result, response) {
                 if (!error) {
                     callback(response);
