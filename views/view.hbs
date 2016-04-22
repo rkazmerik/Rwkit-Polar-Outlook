@@ -1,5 +1,8 @@
 {{#if preview}}
-    <span class="ms-font-xxl">Preview Poll</span>
+    <span class="ms-font-xxl view-header">
+        <i id="BackButtonEdit" class="ms-Icon ms-Icon--receiptReply"></i>
+        Preview Poll
+    </span>
 {{/if}}
 
 <div id="ViewPoll" class="ms-Grid">
@@ -35,7 +38,6 @@
         
         <div id="PollButtons" class="ms-Grid-col ms-u-sm12 ms-u-lg6 button-container hide">
         {{#if preview}}
-            <button class="ms-Button back" type="button">Back</button>     
             <button class="ms-Button ms-Button--primary insert-poll" type="submit">Insert Poll</button>
         {{/if}}
         </div>

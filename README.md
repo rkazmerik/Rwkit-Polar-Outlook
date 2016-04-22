@@ -16,12 +16,12 @@
 /polls/chart/:chartId
 
 ##Todos
-- Add back button to chart preview
+
 
 ##Bugs
 - Need word breaking on donut legend
 - Using back button allows multiple responses
-- Can't answer poll with no radio selection (crashes)
+- Keep answers in same order as entered in view
 
 ##Backburner
 - setup dev and prd slots on webapp

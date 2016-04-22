@@ -4,6 +4,29 @@ var app = (function () {
     var app = {};
     app.initialize = function () {
         
+        //detect the current poll from email body
+        if(window.location.pathname == '/polls/view') {
+            app.redirectToCurrentPoll();
+        }
+        
+        app.redirectToCurrentPoll = function () {          
+            //get the email message body
+            Office.context.mailbox.item.body.getAsync("html",
+                function callback(result) {
+                    var pollId = app.getPollIdFromEmail(result); 
+                    window.location.replace('/polls/view/'+pollId+'?mode=preview');
+                });
+        };
+        
+        app.getPollIdFromEmail = function(data) {        
+            //get the pollId from the email body
+            var body = data.value.toString();
+            var start = body.indexOf('/polls/view/');
+            var pollId = body.substring(start + 12, start + 48);
+            
+            return pollId;
+        }
+        
         //add-in notification bar
         app.buildNotification = function () {
              $('body').append(
@@ -25,24 +48,17 @@ var app = (function () {
         $('#notification-message-close').click(function () {
             $('#notification-message').hide();
         });
-       
-        app.redirectToCurrentPoll = function () {          
-            //get the email message body
-            Office.context.mailbox.item.body.getAsync("html",
-                function callback(result) {
-                    var pollId = app.getPollIdFromEmail(result); 
-                    window.location.replace('/polls/view/'+pollId+'?mode=preview');
-                });
-        };
         
-        app.getPollIdFromEmail = function(data) {        
-            //get the pollId from the email body
-            var body = data.value.toString();
-            var start = body.indexOf('/polls/view/');
-            var pollId = body.substring(start + 12, start + 48);
-            
-            return pollId;
+        app.getParameterByName = function (name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
         }
+        
     };
     return app;
 })();

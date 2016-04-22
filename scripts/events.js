@@ -6,13 +6,8 @@
             app.initialize();
             app.buildNotification();
             
-            //detect the current poll from email body
-            if(window.location.pathname == '/polls/view') {
-                app.redirectToCurrentPoll();
-            }
-            
             //add new answer input to create view
-            $("#AddAnswerInput").click(function (event) {
+            $(".add-answer").click(function (event) {
                 event.preventDefault();
                 $(".ms-Grid-row:hidden:first .answer").prop("disabled", false);
                 $(".ms-Grid-row:hidden:first .total").prop("disabled", false);
@@ -31,7 +26,7 @@
                 }
             });
             
-            //create a poll
+            //on poll create
             $("#CreatePoll").submit(function (event) {
                 $('.required').each(function(){
                     if($(this).val() == ""){
@@ -42,7 +37,22 @@
                 })  
             });
             
-            //submit a response
+            //on back button click
+            $("#BackButtonEdit").click(function(event) {
+                var pollId = ($("#PollId").val());
+                window.location.replace('/edit/'+pollId);
+            });
+            
+            //on poll preview load
+            $("#PollData").ready(function(){
+                if(app.getParameterByName('mode') == 'preview') {
+                    $.get('../views/helpers/preview.hbs', function(html){
+                        app.showNotification('',html);
+                    });
+                }
+            });
+            
+            //on poll submit
             $("#PollData").submit(function (event) {
                 event.preventDefault();
                 var pollId = ($("#PollId").val());
@@ -55,6 +65,7 @@
                         url: '/view/'+pollId,   
                         data: $(this).serialize(),
                         success: function(data){
+                            $(".ms-validation").hide();
                             $("#PollResults").html(data);
                             $("#PollResults").fadeIn(500);
                             $("#PollButtons").toggle();
@@ -70,7 +81,7 @@
                     { coercionType: Office.CoercionType.Html });
             });
 
-
+            
     
         });    
     //};

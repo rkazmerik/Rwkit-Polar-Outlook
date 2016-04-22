@@ -16,14 +16,40 @@ body{
     padding:0;
 }
 #CreatePoll{
-    margin-top:20px;
+    position:relative;
+    top:60px;
+    left:-10px;
 }
 #EditPoll{
     margin-top:20px;
 }
+#ViewPoll{
+    position:relative;
+    top:50px;
+    left:-10px;
+}
 #PollResults{
     margin-top:50px;
 }
+
+/** VIEW STYLES **/
+.view-header{
+    background-color:#EAEAEA;
+    position:absolute;
+    top:0;
+    left:0;
+    padding:15px;
+    width:100%;
+    margin-bottom:50px;
+}
+.view-icon{
+    
+}
+    .rocket{
+        height:35px;
+        margin-bottom: -7px;       
+    }
+
 /** VIEW: REDIRECT **/
 #Redirect-Progress{
     width: 40px;
@@ -57,6 +83,7 @@ textarea{
 }
     .button-container button{
         width:100%;
+        margin-bottom:5px;
     }
     
 .ms-Button--primary{
@@ -64,10 +91,11 @@ textarea{
 }
     .submit-response{
         width:100%;
-        max-width:200px;
+        max-width:240px;
     }
     .insert-poll{
         width:48%;
+        margin-top:10px;
     }
     .back{
         width:48%;
@@ -80,6 +108,8 @@ textarea{
     margin-left:-10px;
 }
 .ms-validation, .ms-validation-answer{
+    position:relative;
+    top:10px;
     color:red;
     font-size:11px;
 }
@@ -110,7 +140,7 @@ rect.disabled {
 
 /** NOTIFICATION AREA **/
 #notification-message {
-    background-color: #818285;
+    background-color: #444444;
     color: #fff;
     position: absolute;
     width: 100%;
@@ -141,3 +171,18 @@ rect.disabled {
     top: 5px;
     cursor: pointer;
 }
+
+.ms-Icon--flag{
+    color:#A80000;
+    font-size:20px;
+    margin-top:3px;
+}
+
+#PreviewNotification{
+    margin: 0px 17px 10px 0px;
+    padding-right:13px;
+}
+    #PreviewNotification span{
+        color:white;
+        font-weight:400;
+    }
