@@ -16,20 +16,12 @@
 /polls/chart/:chartId
 
 ##Todos
-- Remove hardcode from chart ajax post
 - Add back button to chart preview
 
 ##Bugs
 - Need word breaking on donut legend
 - Using back button allows multiple responses
-- Can't delete poll with no responses (crashes)
 - Can't answer poll with no radio selection (crashes)
 
 ##Backburner
 - setup dev and prd slots on webapp
-
-
-
-            {{#if preview}}
-                    
-            {{/if}}

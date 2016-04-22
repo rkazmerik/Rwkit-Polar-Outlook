@@ -52,9 +52,13 @@ textarea{
     padding-left:20px;
 }
 .button-container{
-    margin-top:20px;
+    margin-top:30px;
     width:100%;
 }
+    .button-container button{
+        width:100%;
+    }
+    
 .ms-Button--primary{
     color:white;
 }
@@ -75,7 +79,15 @@ textarea{
 	text-align: center;
     margin-left:-10px;
 }
-
+.ms-validation, .ms-validation-answer{
+    color:red;
+    font-size:11px;
+}
+    .validation{
+        position:relative;
+        top:-5px;
+    }
+    
 /** DONUT CHART **/
 #donutChart{
     margin-top:20px;

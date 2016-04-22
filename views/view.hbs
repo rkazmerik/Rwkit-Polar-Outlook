@@ -6,18 +6,22 @@
     <div class="ms-Grid-row">
         <div class="ms-Grid-col ms-u-sm12 ms-u-lg6">
             <form id='PollData' method="post">
+            <input id="PollId" type="hidden" name="pollId" value="{{poll.body.value.0.RowKey}}" />
             <div class='ms-TextField'>    
                 <p class="ms-font-l">{{questions.body.value.0.question}}</p>
-                <input type="hidden" name="questionId" value="{{questions.body.value.0.RowKey}}" />
+                <input id="QuestionId" type="hidden" name="questionId" value="{{questions.body.value.0.RowKey}}" />
             </div>
             
             {{#each answers.body.value}}
-            <div class="answer-container ms-ChoiceField">
-                <input id="Radio{{@index}}" type='radio' name='answers' value="{{answer}}|{{RowKey}}">
+            <div id="PollAnswers" class="answer-container ms-ChoiceField">
+                <input id="Radio{{@index}}" class='required' type='radio' name='answers' value="{{answer}}|{{RowKey}}">
                     {{answer}}
                 </input>
             </div>
             {{/each}}
+            <div class='validation'>    
+                <label class="ms-validation"/>
+            </div>
             
             <div class="button-container">
                 <button class="ms-Button ms-Button--primary submit-response" type="submit">Submit Response</button>

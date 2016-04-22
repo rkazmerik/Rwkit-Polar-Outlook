@@ -22,6 +22,10 @@ var app = (function () {
             $('#notification-message').slideDown('fast');
         };
         
+        $('#notification-message-close').click(function () {
+            $('#notification-message').hide();
+        });
+       
         app.redirectToCurrentPoll = function () {          
             //get the email message body
             Office.context.mailbox.item.body.getAsync("html",

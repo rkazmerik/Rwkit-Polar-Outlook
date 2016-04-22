@@ -68,7 +68,7 @@ router.post('/create', function (req, res) {
             
             //add new answer(s)
             data.answer.createAnswer(pollId, questionId, req.body, function(){
-                res.redirect('preview/'+pollId+'mode=preview');    
+                res.redirect('view/'+pollId+'?mode=preview');    
             })
         });      
     });

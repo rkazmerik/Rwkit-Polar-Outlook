@@ -31,19 +31,36 @@
                 }
             });
             
+            //create a poll
+            $("#CreatePoll").submit(function (event) {
+                $('.required').each(function(){
+                    if($(this).val() == ""){
+                        event.preventDefault();
+                        $(".ms-validation").html("This field is required");
+                        $(".ms-validation-answer").html("At least two answers are required");
+                    }                
+                })  
+            });
+            
             //submit a response
             $("#PollData").submit(function (event) {
                 event.preventDefault();
-                $.ajax({   
-                    type: 'POST',   
-                    url: '/view/b49f4e40-cd13-11e5-8bb6-f598a8be1927',   
-                    data: $(this).serialize(),
-                    success: function(data){
-                        $("#PollResults").html(data);
-                        $("#PollResults").fadeIn(500);
-                        $("#PollButtons").toggle();
-                    }
-                }); 
+                var pollId = ($("#PollId").val());
+                if (!$("input[name='answers']:checked").val()) {
+                    $(".ms-validation").html("*At least one response in required");
+                }
+                else {
+                    $.ajax({   
+                        type: 'POST',   
+                        url: '/view/'+pollId,   
+                        data: $(this).serialize(),
+                        success: function(data){
+                            $("#PollResults").html(data);
+                            $("#PollResults").fadeIn(500);
+                            $("#PollButtons").toggle();
+                        }
+                    }); 
+                }
             });
 
             //insert poll into email body
@@ -53,22 +70,8 @@
                     { coercionType: Office.CoercionType.Html });
             });
 
-            //office add-in notification bar
-            $('#notification-message-close').click(function () {
-                $('#notification-message').hide();
-            });
 
-            $(".delete-row").click(function (event) {
-                event.preventDefault();
-                $.get('/views/helpers/delete.hbs').done(function(src) {
-                    app.showNotification("Delete Poll?", src);
-                    
-                    //delete button for delete notification
-                    $("#notification-message .delete").click(function (event) {
-                        window.location.replace($('.delete-row').attr('href'));
-                    });
-                }); 
-            });    
+    
         });    
     //};
 })();

@@ -8,13 +8,15 @@
 			<form method="post">
 			<div class="ms-TextField is-required">
 				<label class="ms-Label">Poll Title:</label>
-				<input id="PollTitle" class="ms-TextField-field is-required" type="text" name="title" size="45" />
-			</div>
+				<input id="PollTitle" class="ms-TextField-field required" type="text" name="title" size="45" />
+			    <label class="ms-validation"/>
+            </div>
 	
 			<div class="ms-TextField is-required">
 				<label class="ms-Label">Question:</label>
-				<textarea id="PollQuestion" class="ms-TextField-field is-required" name="questions[]"></textarea>
-			</div>
+				<textarea id="PollQuestion" class="ms-TextField-field required" name="questions[]"></textarea><br/>
+                <label class="ms-validation"/>
+            </div>
 	
     		<div class="ms-TextField is-required">
 				<label class="ms-Label">Answers:</label>
@@ -23,8 +25,8 @@
             <div id="Answers">
                 <div class="ms-Grid-row">
                     <div class="ms-Grid-col">
-                        <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answers"></input>
+                        <div class="ms-TextField ">
+                            <input class="ms-TextField-field answer required" name="answers"></input>
                         </div>
                     </div>
                     <div class="ms-Grid-col">
@@ -34,8 +36,8 @@
                 
                 <div class="ms-Grid-row">
                     <div class="ms-Grid-col">
-                        <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answers"></input>
+                        <div class="ms-TextField">
+                            <input class="ms-TextField-field answer required" name="answers"></input>
                         </div>
                     </div>
                     <div class="ms-Grid-col">
@@ -43,11 +45,13 @@
                         <a class="remove-answer"><i class="ms-Icon ms-Icon--x ms-fontColor-neutralPrimary" aria-hidden="true"></i></a>
                     </div>
                 </div>
-                
-                <div class="ms-Grid-row">
+                <div class='validation'>    
+                    <label class="ms-validation-answer"/>
+                </div>    
+                <div class="ms-Grid-row" hidden="hidden" disabled="true">
                     <div class="ms-Grid-col">
-                        <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answers"></input>
+                        <div class="ms-TextField">
+                            <input class="ms-TextField-field answer" name="answers"  disabled="disabled"></input>
                         </div>
                     </div>
                     <div class="ms-Grid-col">
@@ -56,10 +60,10 @@
                     </div>
                 </div>
                 
-                <div class="ms-Grid-row">
+                <div class="ms-Grid-row" hidden="hidden" disabled="true">
                     <div class="ms-Grid-col">
-                        <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answers"></input>
+                        <div class="ms-TextField">
+                            <input class="ms-TextField-field answer" name="answers"  disabled="disabled"></input>
                         </div>
                     </div>
                     <div class="ms-Grid-col">
@@ -69,8 +73,8 @@
                 </div>
                 <div class="ms-Grid-row" hidden="hidden" disabled="true">
                     <div class="ms-Grid-col">
-                        <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                        <div class="ms-TextField">
+                            <input class="ms-TextField-field answer" name="answers" disabled="disabled"></input>
                         </div>
                     </div>
                     <div class="ms-Grid-col">
@@ -79,8 +83,8 @@
                     </div>
                 </div><div class="ms-Grid-row" hidden="hidden">
                     <div class="ms-Grid-col">
-                        <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                        <div class="ms-TextField">
+                            <input class="ms-TextField-field answer" name="answers" disabled="disabled"></input>
                         </div>
                     </div>
                     <div class="ms-Grid-col">
@@ -89,8 +93,8 @@
                     </div>
                 </div><div class="ms-Grid-row" hidden="hidden">
                     <div class="ms-Grid-col">
-                        <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                        <div class="ms-TextField">
+                            <input class="ms-TextField-field answer" name="answers" disabled="disabled"></input>
                         </div>
                     </div>
                     <div class="ms-Grid-col">
@@ -99,8 +103,8 @@
                     </div>
                 </div><div class="ms-Grid-row" hidden="hidden">
                     <div class="ms-Grid-col">
-                        <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                        <div class="ms-TextField">
+                            <input class="ms-TextField-field answer" name="answers" disabled="disabled"></input>
                         </div>
                     </div>
                     <div class="ms-Grid-col">
@@ -109,8 +113,8 @@
                     </div>
                 </div><div class="ms-Grid-row" hidden="hidden">
                     <div class="ms-Grid-col">
-                        <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                        <div class="ms-TextField">
+                            <input class="ms-TextField-field answer" name="answers" disabled="disabled"></input>
                         </div>
                     </div>
                     <div class="ms-Grid-col">
@@ -119,8 +123,8 @@
                     </div>
                 </div><div class="ms-Grid-row" hidden="hidden">
                     <div class="ms-Grid-col">
-                        <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                        <div class="ms-TextField">
+                            <input class="ms-TextField-field answer" name="answers" disabled="disabled"></input>
                         </div>
                     </div>
                     <div class="ms-Grid-col">
@@ -138,7 +142,7 @@
             </div>
             
             <div class="button-container">
-                <button class="ms-Button ms-Button--primary" type="submit">Create</button>
+                <button class="ms-Button ms-Button--primary" type="submit">Create Poll</button>
             </div>
         </div>
  </form>
