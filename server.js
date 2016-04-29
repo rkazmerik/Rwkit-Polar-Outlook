@@ -8,7 +8,7 @@ var http = require('http');
 var https = require('https');
 
 //required route script files
-var poll = require('./routes/poll');
+var routes = require('./scripts/routes.js');
 
 var https_options = {
   key: fs.readFileSync('./certs/localhost-key.pem'),
@@ -42,7 +42,7 @@ console.log('HTPPS Server listening on PORT:', sslPort);
 console.log('+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+');
 
 //routes for default path, scripts, styles and images
-app.use('/', poll);
+app.use('/', routes);
 app.use('/scripts', express.static(__dirname + '/scripts'));
 app.use('/styles', express.static(__dirname + '/styles'));
 app.use('/images', express.static(__dirname + '/images'));

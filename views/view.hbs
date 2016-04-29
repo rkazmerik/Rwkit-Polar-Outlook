@@ -17,11 +17,12 @@
             
             {{#each answers.body.value}}
             <div id="PollAnswers" class="answer-container ms-ChoiceField">
-                <input id="Radio{{@index}}" class='required' type='radio' name='answers' value="{{answer}}|{{RowKey}}">
+                <input id="Radio{{@index}}" class='required' type='radio' name='answers' value="{{answer}}|{{RowKey}}|{{tally}}|{{color}}">
                     {{answer}}
                 </input>
             </div>
             {{/each}}
+            
             <div class='validation'>    
                 <label class="ms-validation"/>
             </div>
@@ -32,12 +33,13 @@
             </form>               
         </div>
         
-        <div class="ms-Grid-col ms-sm-12 ms-u-lg6">
+        <div class="ms-Grid-col ms-u-sm12 ms-u-lg6">
             <div id="PollResults" class="hide"></div>
         </div>
         
         <div id="PollButtons" class="ms-Grid-col ms-u-sm12 ms-u-lg6 button-container hide">
         {{#if preview}}
+            <button id="ResubmitPollButton" class="ms-Button resubmit-poll" type="button">Resubmit</button>
             <button id="InsertPollButton" class="ms-Button ms-Button--primary insert-poll" type="button">Insert Poll</button>
         {{/if}}
         </div>

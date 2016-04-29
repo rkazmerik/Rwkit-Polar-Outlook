@@ -59,11 +59,10 @@
             });
             
             //on poll submit
-            $("#PollData").unbind().submit(function (event) {
+            $("#PollData").submit(function (event) {
                 event.preventDefault();
-                console.log("Submitting");
-                
                 var pollId = ($("#PollId").val());
+    
                 if (!$("input[name='answers']:checked").val()) {
                     $(".ms-validation").html("*At least one response in required");
                 }
@@ -74,6 +73,8 @@
                         data: $(this).serialize(),
                         success: function(data){
                             $(".ms-validation").hide();
+                            $(".submit-response").hide();
+                            $(".submit-response").attr("disabled","disabled");
                             $("#PollResults").html(data);
                             $("#PollResults").slideDown('slow');
                             $("#PollButtons").slideDown('slow');
@@ -81,7 +82,13 @@
                     }); 
                 }
             });
-
+            
+            //reload the view page
+            $("#ResubmitPollButton").click(function(event) {
+                var pollId = ($("#PollId").val());
+                window.location.replace('/view/'+pollId+'?mode=preview');
+            });
+            
             //insert poll into email body
             $("#InsertPollButton").unbind().click(function (event) {
                 event.preventDefault();

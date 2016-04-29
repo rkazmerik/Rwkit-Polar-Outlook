@@ -31,7 +31,8 @@ body{
     left:-10px;
 }
 #PollResults{
-    margin-top:50px;
+    margin-top:-25px;
+    margin-bottom:-10px;
 }
 
 /** VIEW STYLES **/
@@ -79,15 +80,13 @@ textarea{
 .answer-container{
     padding-left:20px;
 }
+#PollButtons{
+    margin-top:50px;
+}
 .button-container{
     margin-top:30px;
     width:100%;
-}
-    .button-container button{
-        width:100%;
-        margin-bottom:5px;
-    }
-    
+}   
 .ms-Button--primary{
     color:white;
 }
@@ -96,7 +95,7 @@ textarea{
         max-width:240px;
     }
     .insert-poll{
-        width:48%;
+        width:125px;
         margin-top:10px;
     }
 .jscolor{
@@ -119,7 +118,9 @@ textarea{
     
 /** DONUT CHART **/
 #ChartContainer{
-    width:100%;
+    width:90%;
+    height:300px;
+    margin-left:-25px;
 }
  
 

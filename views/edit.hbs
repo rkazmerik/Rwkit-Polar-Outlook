@@ -30,10 +30,10 @@
                 <div class="ms-Grid-row">
                     <div class="ms-Grid-col">
                         <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required" name="answers" value="{{answer}}"></input>
+                            <input class="ms-TextField-field is-required" name="answer" value="{{answer}}"></input>
                             <input type="hidden" name="answerId" value="{{RowKey}}" />
                         </div> 
-                        <input name="totals" type="hidden" value="{{totals}}" />
+                        <input name="tally" type="hidden" value="{{tally}}" />
                     </div>
                     <div class="ms-Grid-col">
                         <div class="ms-TextField is-required">
@@ -46,8 +46,8 @@
                 <div class="ms-Grid-row" hidden="hidden" disabled="true">
                     <div class="ms-Grid-col">
                         <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
-                            <input class="total" name="totals" type="hidden" value="0" disabled="disabled" />
+                            <input class="ms-TextField-field is-required answer" name="answer" disabled="disabled"></input>
+                            <input class="total" name="tally" type="hidden" value="{{tally}}" disabled="disabled" />
                         </div>
                     </div>
                     <div class="ms-Grid-col">
@@ -57,8 +57,8 @@
                 </div><div class="ms-Grid-row" hidden="hidden">
                     <div class="ms-Grid-col">
                         <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
-                            <input class="total" name="totals" type="hidden" value="0" disabled="disabled" />
+                            <input class="ms-TextField-field is-required answer" name="answer" disabled="disabled"></input>
+                            <input class="total" name="tally" type="hidden" value="{{tally}}" disabled="disabled" />
                         </div>
                     </div>
                     <div class="ms-Grid-col">
@@ -68,8 +68,8 @@
                 </div><div class="ms-Grid-row" hidden="hidden">
                     <div class="ms-Grid-col">
                         <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
-                            <input class="total" name="totals" type="hidden" value="0" disabled="disabled" />
+                            <input class="ms-TextField-field is-required answer" name="answer" disabled="disabled"></input>
+                            <input class="total" name="tally" type="hidden" value="{{tally}}" disabled="disabled" />
                         </div>
                     </div>
                     <div class="ms-Grid-col">
@@ -79,8 +79,8 @@
                 </div><div class="ms-Grid-row" hidden="hidden">
                     <div class="ms-Grid-col">
                         <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
-                            <input class="total" name="totals" type="hidden" value="0" disabled="disabled" />
+                            <input class="ms-TextField-field is-required answer" name="answer" disabled="disabled"></input>
+                            <input class="total" name="tally" type="hidden" value="{{tally}}" disabled="disabled" />
                         </div>
                     </div>
                     <div class="ms-Grid-col">
@@ -90,8 +90,8 @@
                 </div><div class="ms-Grid-row" hidden="hidden">
                     <div class="ms-Grid-col">
                         <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
-                            <input class="total" name="totals" type="hidden" value="0" disabled="disabled" />
+                            <input class="ms-TextField-field is-required answer" name="answer" disabled="disabled"></input>
+                            <input class="total" name="tally" type="hidden" value="{{tally}}" disabled="disabled" />
                         </div>
                     </div>
                     <div class="ms-Grid-col">
@@ -102,8 +102,8 @@
                 <div class="ms-Grid-row" hidden="hidden">
                     <div class="ms-Grid-col">
                         <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
-                            <input class="total" name="totals" type="hidden" value="0" disabled="disabled" />
+                            <input class="ms-TextField-field is-required answer" name="answer" disabled="disabled"></input>
+                            <input class="total" name="tally" type="hidden" value="{{tally}}" disabled="disabled" />
                         </div>
                     </div>
                     <div class="ms-Grid-col">
@@ -113,7 +113,7 @@
                 </div>
 	        </div>
             <div class="add-answer-container">
-                <button id="AddAnswerInput" class="ms-Button ms-Button--command" type="button">
+                <button id="AddAnswerInput" class="ms-Button ms-Button--command add-answer" type="button">
                     <i class="ms-Icon ms-Icon--circlePlus ms-Icon-2x"></i>
                     Add Answer
                 </button>
