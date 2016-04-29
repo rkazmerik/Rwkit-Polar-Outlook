@@ -16,7 +16,8 @@
 /polls/chart/:chartId
 
 ##Todos
-
+- Replace D3 with highcharts
+- Clean up data layer
 
 ##Bugs
 - Need word breaking on donut legend

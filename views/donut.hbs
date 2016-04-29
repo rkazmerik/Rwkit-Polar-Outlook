@@ -1,0 +1,57 @@
+<script src="/../scripts/vendor/highcharts.js" type="text/javascript"></script>
+
+<script>
+    
+    var answers = {{{toJSON body.value}}};  
+    var processedData = [];
+    var processedColors = [];
+    
+    for(var i in answers){
+        var a = answers[i].answer;
+        var b = answers[i].tally;
+        var c = answers[i].color;
+        processedData.push([a,b]);
+        processedColors.push("#"+c); 
+    }
+    
+    Highcharts.setOptions({
+        colors: processedColors
+    });
+        
+    // Create the chart
+    $(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'ChartContainer',
+                type: 'pie'
+            },
+            title: false,
+            plotOptions: {
+                pie: {
+                    shadow: false
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.point.name +'</b>: '+ this.y +' %';
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: 'Browsers',
+                data: processedData,
+                size: '80%',
+                innerSize: '50%',
+                showInLegend:true,
+                dataLabels: {
+                    enabled: false
+                }
+            }]
+        });
+    });
+      
+</script>
+
+<div id="ChartContainer"></div>

@@ -47,7 +47,7 @@ router.post('/view/:pollId', function (req, res) {
     data.response.createResponses(pollId, responseObj, user, function (resp) {
         //update the poll totals
         data.answer.updateTally(responseObj, "add", function(){
-            res.redirect('/chart/'+pollId);  
+            res.redirect('/donut/'+pollId);  
         });  
     });
 });
@@ -113,25 +113,13 @@ router.post('/edit/:RowKey', function (req, res) {
     });
 });
 
-//route for getting a chart
-router.get('/chart/:pollId', function (req, res) {
+//route for getting a donut chart
+router.get('/donut/:pollId', function (req, res) {
         var pollId = req.params.pollId;
-        var pollObj = {};
         
-        //get the poll
-        data.entity.getEntity(pollId, function (resp) {
-            pollObj['poll'] = resp;
-            
-            //get the questions for the poll
-            data.question.getQuestionsByEntity(pollId, function (questions) {
-                pollObj['questions'] = questions;
-                
-                //get the answers for the poll
-                data.answer.getAnswersByEntity(pollId, function (answers) {
-                    pollObj['answers'] = answers;
-                    res.render('chart', pollObj); 
-                });
-            })            
+        //get the answers for the poll
+        data.answer.getAnswersByEntity(pollId, function (answers) {
+            res.render('donut', answers); 
         });
 });
 

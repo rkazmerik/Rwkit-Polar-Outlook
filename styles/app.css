@@ -118,24 +118,10 @@ textarea{
     }
     
 /** DONUT CHART **/
-#donutChart{
-    margin-top:20px;
+#ChartContainer{
+    width:100%;
 }
-.tooltip {
-	display: none;
-	text-align: center;
-	z-index: 10;
-}
-.legend{
-	word-break: break-all;
-}
-rect {
-	cursor: pointer;                                           
-	stroke-width: 1;
-}
-rect.disabled {                                              
-	fill: transparent !important;                              
-}   
+ 
 
 /** NOTIFICATION AREA **/
 #notification-message {
