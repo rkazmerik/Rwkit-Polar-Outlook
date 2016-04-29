@@ -15,7 +15,7 @@ var https_options = {
   cert: fs.readFileSync('./certs/localhost-cert.pem')
 };
 
-var port = process.env.PORT || 8081;
+var port = 8081;
 var sslPort = 8443;
     
 var app = express();
@@ -32,7 +32,6 @@ app.engine('hbs', hbs( {
 app.set('view engine', 'hbs');
 
 http.createServer(app).listen(port);
-
 https.createServer(https_options, app)
                   .listen(sslPort);
                   

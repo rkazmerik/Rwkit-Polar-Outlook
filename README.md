@@ -1,4 +1,4 @@
-#RwkitPolar Outlook Add-in
+#Rwkit Polar Outlook Add-in
 
 ##Entity Types
 - Poll
@@ -30,14 +30,19 @@
 /reset/:pollId
 /donut/:chartId
 
+##Views
+- layout/master
+- helper/preview
+- create
+- donut
+- edit
+- redirect
+- view
 
 ##Todos
 
 ##Bugs
-- Using back button allows multiple responses
+- Need to prevent multiple responses from non-preview user
 - Keep answers in same order as entered in view
 - Getting 'batch to large error' on poll reset
     - Batches must be 100 entities max!
-
-##Backburner
-- setup dev and prd slots on webapp
