@@ -1,5 +1,6 @@
 var bodyParser = require('body-parser')
 var express = require('express');
+var app = require("../scripts/app.js");
 var data = require("../scripts/data.js");
 var router = express.Router();
 
@@ -18,16 +19,17 @@ router.get('/view/:pollId', function (req, res) {
         pollObj['preview'] = req.query.mode;
         
         //get the poll
-        data.getPoll("Poll", pollId, function (poll) {
-            pollObj['poll'] = poll;
+        data.getPoll("Poll", pollId, function (resp) {
+            pollObj['poll'] = resp.body.value[0];
             
             //get the questions for the poll
-            data.getEntitiesByPoll("Question", pollId, function (questions) {
-                pollObj['questions'] = questions;
+            data.getEntitiesByPoll("Question", pollId, function (resp2) {
+                pollObj['questions'] = resp2.body.value[0];
                
                 //get the answers for the poll
-                data.getEntitiesByPoll("Answer", pollId, function (answers) {
-                    pollObj['answers'] = answers;
+                data.getEntitiesByPoll("Answer", pollId, function (resp3) {
+                    pollObj['answers'] = resp3.body.value;
+                    pollObj.answers.sort(function(a, b){return a.order - b.order;});
                     res.render('view', pollObj); 
                 });
             })            
@@ -61,12 +63,11 @@ router.get('/create', function (req, res) {
 //create a new poll
 router.post('/create', function (req, res) {
     data.createPoll(req.body, function (resp) {
-        var pollId = resp.RowKey._;
-
+        var pollId = resp.RowKey;
+        
         //add a new question
-        data.createQuestions(pollId, req.body, function (questions) {
-            var questionId = questions.RowKey._;
-            
+        data.createQuestion(pollId, req.body, function (resp2) {
+            var questionId = resp2.RowKey;
             //add new answer(s)
             data.createAnswers(pollId, questionId, req.body, function(){
                 res.redirect('view/'+pollId+'?mode=preview');    
@@ -81,15 +82,16 @@ router.get('/edit/:RowKey', function (req, res) {
     var pollObj = {};
             
     data.getPoll("Poll", pollId, function (resp) {
-         pollObj['poll'] = resp;
+         pollObj['poll'] = resp.body.value[0];
             
             //get the questions for the poll
-            data.getEntitiesByPoll("Question", pollId, function (questions) {
-                pollObj['questions'] = questions;
+            data.getEntitiesByPoll("Question", pollId, function (resp2) {
+                pollObj['question'] = resp2.body.value[0];
                 
                 //get the answers for the poll
-                data.getEntitiesByPoll("Answer", pollId, function (answers) {
-                    pollObj['answers'] = answers;
+                data.getEntitiesByPoll("Answer", pollId, function (resp3) {
+                    pollObj['answers'] = resp3.body.value;
+                    pollObj.answers.sort(function(a, b){return a.order - b.order;});
                     res.render('edit', pollObj); 
                 });
             });   
@@ -99,16 +101,50 @@ router.get('/edit/:RowKey', function (req, res) {
 //edit a poll
 router.post('/edit/:RowKey', function (req, res) {
     var pollId = req.params.RowKey;
+    var postData = req.body;
+    
+    var answerObj = {"adds":[], "edits":[], "deletes":[]};
+    
+    for(var i=0; i < postData.answerId.length; i++){  
+        var props = {};
+        for (var key in postData) {
+            if (postData.hasOwnProperty(key)) {
+                props[key] = postData[key][i] || postData[key][0];
+            }
+        }
+        if(postData.answerId[i] == ""){                                          
+            if(postData.answers[i] != undefined) {
+                answerObj.adds.push(props);
+            }
+        }
+        else if(postData.answers[i] != undefined){
+            answerObj.edits.push(props);
+        }
+        else {
+            answerObj.deletes.push(props);
+        }
+    }
+    console.log(answerObj.deletes);
     
     //update the poll
-    data.editPoll(req.body, function () {
+    data.editPoll(postData, function () {
         
         //update the questions
-        data.editQuestions(req.body, function(){
-            
-            //update the answers
-            data.editAnswers(req.body, "none", function(){
-                res.redirect('/view/'+pollId+'?mode=preview');
+        data.editQuestion(postData, function(resp2){
+            var questionId = resp2.RowKey;
+    
+            //create any new answers
+            data.createAnswers(answerObj.adds, function(){
+                
+                //delete any removed answers
+                //data.deleteAnswers(req.body, function(){
+                    
+                    //update the existing answers
+                    data.editAnswers(answerObj.edits, "none", function(){
+                        res.redirect('/view/'+pollId+'?mode=preview');
+                    }); 
+                //});
+                
             });
         });
     });

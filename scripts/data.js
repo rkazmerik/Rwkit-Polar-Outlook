@@ -50,7 +50,8 @@ module.exports = {
     
         tableService.insertEntity(tableId, entity, function (error, result, response) {
             if (!error) {
-                callback(entity);
+                result["RowKey"] = entity.RowKey._;
+                callback(result);
             } if (error) {
                 onError(error, callback);
             }
@@ -61,8 +62,8 @@ module.exports = {
         
         var entity = {
             PartitionKey: entGen.String("Poll"),
-            RowKey: entGen.String(entityInfo.entityId),
-            title: entGen.String(entityInfo.title)
+            RowKey: entGen.String(entityInfo.entityId[0]),
+            title: entGen.String(entityInfo.title[0])
         };
     
         tableService.mergeEntity(tableId, entity, function (error, result, response) {
@@ -75,45 +76,38 @@ module.exports = {
     },
     
     //QUESTION FUNCTIONS
-    createQuestions : function(entityId, questionInfo, callback) {    
-        var batch = new azure.TableBatch();
+    createQuestion : function(entityId, questionInfo, callback) {    
         
-        for(var i=0; i<questionInfo.questions.length; i++) {
-            var questionId = uuid.v4();
-            var question = {
-                PartitionKey: entGen.String("Question"),
-                RowKey: entGen.String(questionId),
-                entityId: entGen.String(entityId),
-                question: entGen.String(questionInfo.questions[i])
-            };
-            batch.insertEntity(question, {echoContent:true});
-        }
+        var questionId = uuid.v4();
+        var entity = {
+            PartitionKey: entGen.String("Question"),
+            RowKey: entGen.String(questionId),
+            entityId: entGen.String(entityId),
+            question: entGen.String(questionInfo.question)
+        };
         
-        tableService.executeBatch(tableId, batch, function (error, result, response) {
+        tableService.insertEntity(tableId, entity, function (error, result, response) {
             if (!error) {
-                callback(question);
+                result["RowKey"] = entity.RowKey._;
+                callback(result);
             } if (error) {
                 onError(error, callback);
             }
-        });
-       
+        });     
     },
     
-    editQuestions : function(questionInfo, callback) {         
-        var batch = new azure.TableBatch();
+    editQuestion : function(questionInfo, callback) {         
         
-        for(var i=0; i<questionInfo.questions.length; i++) {
-            var question = {
-                PartitionKey: entGen.String("Question"),
-                RowKey: entGen.String(questionInfo.questionId[i]),
-                question: entGen.String(questionInfo.questions[i])
-            };
-            batch.mergeEntity(question, {echoContent:true});
-        }
+        var entity = {
+            PartitionKey: entGen.String("Question"),
+            RowKey: entGen.String(questionInfo.questionId[0]),
+            question: entGen.String(questionInfo.question[0])
+        };
     
-        tableService.executeBatch(tableId, batch, function (error, result, response) {
+        tableService.mergeEntity(tableId, entity, function (error, result, response) {
             if (!error) {
-                callback(response);
+                result["RowKey"] = entity.RowKey._;
+                callback(result);
             } if (error) {
                 onError(error, callback);
             }
@@ -121,24 +115,61 @@ module.exports = {
     },
     
     //ANSWER FUNCTIONS
-    createAnswers : function(entityId, questionId, answerInfo, callback) {    
+    createAnswers : function(answerInfo, callback) {    
         var batch = new azure.TableBatch();
-        
-            for(i=0; i<answerInfo.answers.length; i++){
+            
+            for(i=0; i<answerInfo.length; i++){
                 var answerId = uuid.v4();
         
                 var entity = {
                     PartitionKey: entGen.String("Answer"),
                     RowKey: entGen.String(answerId),
-                    entityId: entGen.String(entityId),
-                    questionId: entGen.String(questionId),
-                    answer: entGen.String(answerInfo.answers[i]),
-                    color: entGen.String(answerInfo.colors[i]),
-                    tally: entGen.Int32(0)
+                    entityId: entGen.String(answerInfo[i].entityId),
+                    questionId: entGen.String(answerInfo[i].questionId),
+                    answer: entGen.String(answerInfo[i].answers),
+                    color: entGen.String(answerInfo[i].colors),
+                    tally: entGen.Int32(0),
+                    order: entGen.Int32(answerInfo[i].order)
                 }
                 batch.insertEntity(entity, {echoContent:true});
             }
+        
+        if(batch.operations.count > 0) {    
+            tableService.executeBatch(tableId, batch, function (error, result, response) {
+                if (!error) {
+                    callback(response);
+                } if (error) {
+                    onError(error, callback);
+                }
+            });
+        } else {
+            callback();
+        }
+    },
     
+    editAnswers : function(answerInfo, operator, callback) {         
+        var batch = new azure.TableBatch();
+        
+        for(i=0; i<answerInfo.length; i++){
+            
+            if(operator == "add")
+                answerInfo[i].tally++;
+            if(operator == "sub")
+                answerInfo[i].tally--;
+            if(operator == "reset")
+                answerInfo[i].tally = 0;
+             
+            var entity = {
+                PartitionKey: entGen.String("Answer"),
+                RowKey: entGen.String(answerInfo[i].answerId),
+                answer: entGen.String(answerInfo[i].answers),
+                color: entGen.String(answerInfo[i].colors),
+                tally: entGen.Int32(parseInt(answerInfo[i].tally)),
+                order: entGen.Int32(parseInt(answerInfo[i].order))
+            }
+                batch.mergeEntity(entity, {echoContent:true});    
+        }
+        
         tableService.executeBatch(tableId, batch, function (error, result, response) {
             if (!error) {
                 callback(response);
@@ -146,29 +177,21 @@ module.exports = {
                 onError(error, callback);
             }
         });
+        
     },
     
-    editAnswers : function(answerInfo, operator, callback) {         
+    deleteAnswers : function(answerInfo, operator, callback) {         
         var batch = new azure.TableBatch();
         var noAnswers = answerInfo.answerId.length;
         
         for(i=0; i<noAnswers; i++){
-                    
-            if(operator == "add")
-                answerInfo.tally[i]++;
-            if(operator == "sub")
-                answerInfo.tally[i]--;
-            if(operator == "reset")
-                answerInfo.tally[i] = 0;
-                
+ 
             var entity = {
                 PartitionKey: entGen.String("Answer"),
-                RowKey: entGen.String(answerInfo.answerId[i]),
-                answer: entGen.String(answerInfo.answer[i]),
-                color: entGen.String(answerInfo.colors[i]),
-                tally: entGen.Int32(parseInt(answerInfo.tally[i]))
+                RowKey: entGen.String(answerInfo.answerId[i])
             }
-                batch.mergeEntity(entity, {echoContent:true});
+            
+            batch.deleteEntity(entity, {echoContent:true});
         }
         
         tableService.executeBatch(tableId, batch, function (error, result, response) {
@@ -201,7 +224,7 @@ module.exports = {
            
         for(var i=0; i<responseInfo.answer.length; i++) {
             var responseId = uuid.v4();
-            var response = {
+            var entity = {
                 PartitionKey: entGen.String("Response"),
                 RowKey: entGen.String(responseId),
                 entityId: entGen.String(entityId),
@@ -210,7 +233,7 @@ module.exports = {
                 user: entGen.String(user),
                 dateCreated: entGen.DateTime(new Date(Date.now()))
             };
-            batch.insertEntity(response, {echoContent:true});
+            batch.insertEntity(entity, {echoContent:true});
         }
        
         tableService.executeBatch(tableId, batch, function (error, result, response) {
@@ -248,7 +271,7 @@ module.exports = {
                callback();
            }
         }); 
-    }
+    },
 };
 
 //PRIVATE FUNCTIONS

@@ -9,16 +9,16 @@
 	<div class="ms-Grid-row">
 		<div class="ms-Grid-col">
 		<form method="post">
-            <input name="entityId" type="hidden" value="{{poll.body.value.0.RowKey}}" />
+            <input name="entityId[]" type="hidden" value="{{poll.RowKey}}" />
 			<div class="ms-TextField is-required">
 				<label class="ms-Label">Poll Title:</label>
-				<input id="PollTitle" class="ms-TextField-field is-required" type="text" name="title" size="62" value="{{poll.body.value.0.title}}">
+				<input id="PollTitle" class="ms-TextField-field is-required" type="text" name="title[]" size="62" value="{{poll.title}}">
 			</div>
 	 
 			<div class="ms-TextField is-required">
-                <input name="questionId[]" type="hidden" value="{{questions.body.value.0.RowKey}}" />
+                <input name="questionId[]" type="hidden" value="{{question.RowKey}}" />
 				<label class="ms-Label">Question:</label>
-                <textarea id="PollQuestion" class="ms-TextField-field is-required" name="questions[]">{{questions.body.value.0.question}}</textarea>
+                <textarea id="PollQuestion" class="ms-TextField-field is-required" name="question[]">{{question.question}}</textarea>
 			</div>
 	
     		<div class="ms-TextField is-required">
@@ -26,19 +26,19 @@
 			</div>
 	
             <div id="Answers">
-                {{#each answers.body.value}} 
+                {{#each answers}} 
                 <div class="ms-Grid-row">
                     <div class="ms-Grid-col">
                         <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required" name="answer" value="{{answer}}"></input>
-                            <input type="hidden" name="answerId" value="{{RowKey}}" />
-                        </div> 
-                        <input name="tally" type="hidden" value="{{tally}}" />
+                            <input class="ms-TextField-field is-required answer" name="answers" value="{{answer}}"></input>
+                            <input class="answerId" type="hidden" name="answerId" value="{{RowKey}}" />
+                            <input class="tally" name="tally" type="hidden" value="{{tally}}" />
+                            <input class="order" name="order" type="hidden" value="{{order}}" />
+                        </div>   
                     </div>
                     <div class="ms-Grid-col">
-                        <div class="ms-TextField is-required">
-                            <input class="jscolor" value="{{color}}" name="colors">
-                        </div>    
+                        <input class="jscolor" value="{{color}}" name="colors">
+                        <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
                     </div>
                 </div>
                 {{/each}}
@@ -46,69 +46,81 @@
                 <div class="ms-Grid-row" hidden="hidden" disabled="true">
                     <div class="ms-Grid-col">
                         <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answer" disabled="disabled"></input>
-                            <input class="total" name="tally" type="hidden" value="{{tally}}" disabled="disabled" />
+                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                            <input class="answerId" type="hidden" name="answerId" value="{{RowKey}}" disabled="disabled"/>
+                            <input class="tally" name="tally" type="hidden" value="{{tally}}" disabled="disabled" />
+                            <input class="order" name="order" type="hidden" value="{{order}}" disabled="disabled" />
                         </div>
                     </div>
                     <div class="ms-Grid-col">
                         <input class="jscolor" value="500778" name="colors" disabled="disabled">
-                        <a class="remove-answer"><i class="ms-Icon ms-Icon--x" aria-hidden="true"></i></a>
+                        <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
                     </div>
                 </div><div class="ms-Grid-row" hidden="hidden">
                     <div class="ms-Grid-col">
                         <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answer" disabled="disabled"></input>
-                            <input class="total" name="tally" type="hidden" value="{{tally}}" disabled="disabled" />
+                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                            <input class="answerId" type="hidden" name="answerId" value="{{RowKey}}" disabled="disabled"/>
+                            <input class="tally" name="tally" type="hidden" value="{{tally}}" disabled="disabled" />
+                            <input class="order" name="order" type="hidden" value="{{order}}" disabled="disabled" />
                         </div>
                     </div>
                     <div class="ms-Grid-col">
                         <input class="jscolor" value="FFCD00" name="colors" disabled="disabled">
-                        <a class="remove-answer"><i class="ms-Icon ms-Icon--x" aria-hidden="true"></i></a>
+                        <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
                     </div>
                 </div><div class="ms-Grid-row" hidden="hidden">
                     <div class="ms-Grid-col">
                         <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answer" disabled="disabled"></input>
-                            <input class="total" name="tally" type="hidden" value="{{tally}}" disabled="disabled" />
+                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                            <input class="answerId" type="hidden" name="answerId" value="{{RowKey}}" disabled="disabled"/>
+                            <input class="tally" name="tally" type="hidden" value="{{tally}}" disabled="disabled"/>
+                            <input class="order" name="order" type="hidden" value="{{order}}" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="ms-Grid-col">
                         <input class="jscolor" value="41B6E6" name="colors" disabled="disabled">
-                        <a class="remove-answer"><i class="ms-Icon ms-Icon--x" aria-hidden="true"></i></a>
+                        <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
                     </div>
                 </div><div class="ms-Grid-row" hidden="hidden">
                     <div class="ms-Grid-col">
                         <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answer" disabled="disabled"></input>
-                            <input class="total" name="tally" type="hidden" value="{{tally}}" disabled="disabled" />
+                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                            <input class="answerId" type="hidden" name="answerId" value="{{RowKey}}" disabled="disabled"/>
+                            <input class="tally" name="tally" type="hidden" value="{{tally}}" disabled="disabled"/>
+                            <input class="order" name="order" type="hidden" value="{{order}}" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="ms-Grid-col">
                         <input class="jscolor" value="003A70" name="colors" disabled="disabled">
-                        <a class="remove-answer"><i class="ms-Icon ms-Icon--x" aria-hidden="true"></i></a>
+                        <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
                     </div>
                 </div><div class="ms-Grid-row" hidden="hidden">
                     <div class="ms-Grid-col">
                         <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answer" disabled="disabled"></input>
-                            <input class="total" name="tally" type="hidden" value="{{tally}}" disabled="disabled" />
+                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                            <input class="answerId" type="hidden" name="answerId" value="{{RowKey}}" disabled="disabled"/>
+                            <input class="tally" name="tally" type="hidden" value="{{tally}}" disabled="disabled"/>
+                            <input class="order" name="order" type="hidden" value="{{order}}" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="ms-Grid-col">
                         <input class="jscolor" value="046A48" name="colors" disabled="disabled">
-                        <a class="remove-answer"><i class="ms-Icon ms-Icon--x" aria-hidden="true"></i></a>
+                        <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
                     </div>
                 </div>
                 <div class="ms-Grid-row" hidden="hidden">
                     <div class="ms-Grid-col">
                         <div class="ms-TextField is-required">
-                            <input class="ms-TextField-field is-required answer" name="answer" disabled="disabled"></input>
-                            <input class="total" name="tally" type="hidden" value="{{tally}}" disabled="disabled" />
+                            <input class="ms-TextField-field is-required answer" name="answers" disabled="disabled"></input>
+                            <input class="answerId" type="hidden" name="answerId" value="{{RowKey}}" disabled="disabled"/>
+                            <input class="tally" name="tally" type="hidden" value="{{tally}}" disabled="disabled"/>
+                            <input class="order" name="order" type="hidden" value="{{order}}" disabled="disabled"/>
                         </div>
                     </div>
                     <div class="ms-Grid-col">
                         <input class="jscolor" value="53565A" name="colors" disabled="disabled">
-                        <a class="remove-answer"><i class="ms-Icon ms-Icon--x" aria-hidden="true"></i></a>
+                        <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
                     </div>
                 </div>
 	        </div>

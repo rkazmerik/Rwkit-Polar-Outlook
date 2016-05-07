@@ -1,9 +1,10 @@
-var app = (function () {
+        
+    var app = (function () {
     "use strict";
-
+    
     var app = {};
     app.initialize = function () {
-        
+    
         //detect the current poll from email body
         if(window.location.pathname == '/polls/view') {
             app.redirectToCurrentPoll();
@@ -58,7 +59,7 @@ var app = (function () {
             if (!results[2]) return '';
             return decodeURIComponent(results[2].replace(/\+/g, " "));
         }
-        
     };
+    
     return app;
 })();

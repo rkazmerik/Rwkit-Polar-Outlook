@@ -9,8 +9,11 @@
             //add new answer input to create view
             $(".add-answer").click(function (event) {
                 event.preventDefault();
+                $(".ms-Grid-row:hidden:first .answerId").prop("disabled", false);
                 $(".ms-Grid-row:hidden:first .answer").prop("disabled", false);
-                $(".ms-Grid-row:hidden:first .total").prop("disabled", false);
+                $(".ms-Grid-row:hidden:first .tally").prop("disabled", false);
+                $(".ms-Grid-row:hidden:first .order").val(($(".answer:enabled").length));
+                $(".ms-Grid-row:hidden:first .order").prop("disabled", false);
                 $(".ms-Grid-row:hidden:first .jscolor").prop("disabled", false);
                 $(".ms-Grid-row:hidden:first").show();
             });
@@ -19,10 +22,14 @@
             $(".remove-answer").click(function (event) {
                 event.preventDefault();
                 if ($("#Answers .ms-Grid-row").length > 1) {
+                    $(this).parent().parent().find(".answer").val("");
+                    $(this).parent().parent().find(".answerId").prop("disabled", true);
                     $(this).parent().parent().find(".answer").prop("disabled", true);
-                    $(this).parent().parent().find(".total").prop("disabled", true);
+                    $(this).parent().parent().find(".tally").prop("disabled", true);
+                    $(this).parent().parent().find(".order").prop("disabled", true);
                     $(this).parent().parent().find(".jscolor").prop("disabled", true);
                     $(this).parent().parent().hide();
+                    //$(this).parent().parent().prop("disabled", true);
                 }
             });
             

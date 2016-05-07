@@ -13,7 +13,7 @@
 - editPoll
 - createAnswers
 - editAnswers
-- createQuestions
+- createQuestion
 - editQuestions
 - getResponsesByUser
 - createResponses
@@ -40,6 +40,7 @@
 - view
 
 ##Todos
+- Normalize javascript
 
 ##Bugs
 - Need to prevent multiple responses from non-preview user
