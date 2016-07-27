@@ -4,7 +4,7 @@
     <img class='view-icon rocket' src='/../images/rocket.png'></img>
     Create Poll
  </span>
- 
+            
 	<div id="CreatePoll" class="ms-Grid">
 	<div class="ms-Grid-row">
 		<div class="ms-Grid-col">
@@ -20,12 +20,12 @@
 				<textarea id="PollQuestion" class="ms-TextField-field required" name="question"></textarea><br/>
                 <label class="ms-validation"/>
             </div>
-	
+ 
     		<div class="ms-TextField is-required">
 				<label class="ms-Label">Answers:</label>
 			</div>
 	
-            <div id="Answers">
+            <div id="Answers">           
                 <div class="ms-Grid-row">
                     <div class="ms-Grid-col">
                         <div class="ms-TextField ">
@@ -34,12 +34,12 @@
                     </div>
                     <div class="ms-Grid-col">
                         <input class="jscolor" value="004578" name="colors">
+                        <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
                     </div>
-                </div>
-                
+                </div> 
                 <div class="ms-Grid-row">
                     <div class="ms-Grid-col">
-                        <div class="ms-TextField">
+                        <div class="ms-TextField ">
                             <input class="ms-TextField-field answer required" name="answers"></input>
                         </div>
                     </div>
@@ -47,96 +47,15 @@
                         <input class="jscolor" value="106EBE" name="colors">
                         <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
                     </div>
-                </div>
-                <div class='validation'>    
-                    <label class="ms-validation-answer"/>
                 </div>    
-                <div class="ms-Grid-row" hidden="hidden" disabled="true">
-                    <div class="ms-Grid-col">
-                        <div class="ms-TextField">
-                            <input class="ms-TextField-field answer" name="answers"  disabled="disabled"></input>
-                        </div>
-                    </div>
-                    <div class="ms-Grid-col">
-                        <input class="jscolor" value="00BCF2" name="colors">
-                        <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
-                    </div>
-                </div>
-                
-                <div class="ms-Grid-row" hidden="hidden" disabled="true">
-                    <div class="ms-Grid-col">
-                        <div class="ms-TextField">
-                            <input class="ms-TextField-field answer" name="answers"  disabled="disabled"></input>
-                        </div>
-                    </div>
-                    <div class="ms-Grid-col">
-                        <input class="jscolor" value="B3D6F2" name="colors">
-                        <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
-                    </div>
-                </div>
-                <div class="ms-Grid-row" hidden="hidden" disabled="true">
-                    <div class="ms-Grid-col">
-                        <div class="ms-TextField">
-                            <input class="ms-TextField-field answer" name="answers" disabled="disabled"></input>
-                        </div>
-                    </div>
-                    <div class="ms-Grid-col">
-                        <input class="jscolor" value="004B50" name="colors" disabled="disabled">
-                        <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
-                    </div>
-                </div><div class="ms-Grid-row" hidden="hidden">
-                    <div class="ms-Grid-col">
-                        <div class="ms-TextField">
-                            <input class="ms-TextField-field answer" name="answers" disabled="disabled"></input>
-                        </div>
-                    </div>
-                    <div class="ms-Grid-col">
-                        <input class="jscolor" value="008272" name="colors" disabled="disabled">
-                        <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
-                    </div>
-                </div><div class="ms-Grid-row" hidden="hidden">
-                    <div class="ms-Grid-col">
-                        <div class="ms-TextField">
-                            <input class="ms-TextField-field answer" name="answers" disabled="disabled"></input>
-                        </div>
-                    </div>
-                    <div class="ms-Grid-col">
-                        <input class="jscolor" value="00B294" name="colors" disabled="disabled">
-                        <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
-                    </div>
-                </div><div class="ms-Grid-row" hidden="hidden">
-                    <div class="ms-Grid-col">
-                        <div class="ms-TextField">
-                            <input class="ms-TextField-field answer" name="answers" disabled="disabled"></input>
-                        </div>
-                    </div>
-                    <div class="ms-Grid-col">
-                        <input class="jscolor" value="32145A" name="colors" disabled="disabled">
-                        <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
-                    </div>
-                </div><div class="ms-Grid-row" hidden="hidden">
-                    <div class="ms-Grid-col">
-                        <div class="ms-TextField">
-                            <input class="ms-TextField-field answer" name="answers" disabled="disabled"></input>
-                        </div>
-                    </div>
-                    <div class="ms-Grid-col">
-                        <input class="jscolor" value="5C2D91" name="colors" disabled="disabled">
-                        <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
-                    </div>
-                </div><div class="ms-Grid-row" hidden="hidden">
-                    <div class="ms-Grid-col">
-                        <div class="ms-TextField">
-                            <input class="ms-TextField-field answer" name="answers" disabled="disabled"></input>
-                        </div>
-                    </div>
-                    <div class="ms-Grid-col">
-                        <input class="jscolor" value="5C005C" name="colors" disabled="disabled">
-                        <i class="ms-Icon ms-Icon--x remove-answer" aria-hidden="true"></i>
-                    </div>
+            </div>
+
+            <div id="Validation">
+                <div class='validation'>    
+                        <label class="ms-validation-answer"/>
                 </div>
             </div>
-        
+
             <div class="add-answer-container">	
                 <button id="AddAnswerInput" class="ms-Button ms-Button--command add-answer" type="button">
                     <i class="ms-Icon ms-Icon--circlePlus ms-Icon-2x"></i>

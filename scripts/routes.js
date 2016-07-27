@@ -7,6 +7,11 @@ var router = express.Router();
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
+var config = {
+    colors : ['004578','106EBE','00BCF2','B3D6F2','004B50',
+                 '008272','00B294','32145A','5C2D91','5C005C']
+};
+    
 //route for detecting current poll in email
 router.get('/view', function (req, res) {
     res.render('redirect');
@@ -14,63 +19,75 @@ router.get('/view', function (req, res) {
 
 //route for getting a poll
 router.get('/view/:pollId', function (req, res) {
-        var pollId = req.params.pollId;
-        var pollObj = {};
-        pollObj['preview'] = req.query.mode;
+    var pollObj = {pollId: req.params.pollId};
+    pollObj.preview = req.query.mode;
+    
+    //get the poll
+    data.getPoll("Poll", pollObj.pollId, function (resp) {
+        pollObj.title = resp.body.value[0].title;
         
-        //get the poll
-        data.getPoll("Poll", pollId, function (resp) {
-            pollObj['poll'] = resp.body.value[0];
+        //get the questions for the poll
+        data.getEntitiesByPoll("Question", pollObj.pollId, function (resp2) {
+            pollObj.questionId = resp2.body.value[0].RowKey;
+            pollObj.question = resp2.body.value[0].question;
             
-            //get the questions for the poll
-            data.getEntitiesByPoll("Question", pollId, function (resp2) {
-                pollObj['questions'] = resp2.body.value[0];
-               
-                //get the answers for the poll
-                data.getEntitiesByPoll("Answer", pollId, function (resp3) {
-                    pollObj['answers'] = resp3.body.value;
-                    pollObj.answers.sort(function(a, b){return a.order - b.order;});
-                    res.render('view', pollObj); 
-                });
-            })            
-        });
+            //get the answers for the poll
+            data.getEntitiesByPoll("Answer", pollObj.pollId, function (resp3) {
+                pollObj.answers = resp3.body.value;
+                pollObj.answers.sort(function(a, b){return a.order - b.order;});
+                res.render('view', pollObj); 
+            });  
+        })        
+    });  
 });
 
 //route for submitting a response
 router.post('/view/:pollId', function (req, res) {
-    var responseObj = req.body;
-    var pollId = req.params.pollId;
-    var answer = req.body.answers.split("|");
+    var responseObj = {pollId: req.params.pollId};
+    responseObj.mode = req.params.mode;
+    responseObj.user = req.params.user;
     
-    responseObj.answer = [answer[0]];
-    responseObj.answerId = [answer[1]];
-    responseObj.tally = [answer[2]];
-    responseObj.colors = [answer[3]];
+    var i = req.body.answers;
+    responseObj.answerId = req.body.answerId[i];
+    responseObj.answer = req.body.answer[i];
+    responseObj.tally = req.body.tally[i];
     
-    data.createResponses(pollId, responseObj, "admin", function (resp) {
-        //update the answer tally
-        data.editAnswers(responseObj, "add", function(){
-            res.redirect('/donut/'+pollId);  
-        });  
+    //update the answer tally
+    data.updateTally(responseObj, function (resp) {      
+        
+        //create the response
+        console.log(req);
+        if(responseObj.mode) {
+            console.log("Creating");
+            data.createResponses(responseObj, function(){
+                res.redirect('/donut/'+responseObj.pollId);  
+            });  
+        }
     });
 });
 
 //show new poll form
 router.get('/create', function (req, res) {
-    res.render('create');
+    res.render('create', config);
 });
 
 //create a new poll
 router.post('/create', function (req, res) {
-    data.createPoll(req.body, function (resp) {
-        var pollId = resp.RowKey;
+    var pollObj = {title : req.body.title};
+    pollObj.question = req.body.question;
+    pollObj.answers = req.body.answers;
+    pollObj.colors = req.body.colors;
+    
+    data.createPoll(pollObj, function (resp) {
+        pollObj.pollId = resp.RowKey;
         
         //add a new question
-        data.createQuestion(pollId, req.body, function (resp2) {
-            var questionId = resp2.RowKey;
+        data.createQuestion(pollObj, function (resp2) {
+            pollObj.questionId = resp2.RowKey;
+            
             //add new answer(s)
-            data.createAnswers(pollId, questionId, req.body, function(){
-                res.redirect('view/'+pollId+'?mode=preview');    
+            data.createAnswers(pollObj, function(resp3){
+                res.redirect('view/'+pollObj.pollId+'?mode=preview');    
             })
         });      
     });
@@ -78,73 +95,51 @@ router.post('/create', function (req, res) {
 
 //show edit poll form
 router.get('/edit/:RowKey', function (req, res) {
-    var pollId = req.params.RowKey;
-    var pollObj = {};
+    var pollObj = {pollId : req.params.RowKey};
+    
+    //get the poll        
+    data.getPoll("Poll", pollObj.pollId, function (resp) {
+         pollObj.title = resp.body.value[0].title;
             
-    data.getPoll("Poll", pollId, function (resp) {
-         pollObj['poll'] = resp.body.value[0];
+        //get the questions for the poll
+        data.getEntitiesByPoll("Question", pollObj.pollId, function (resp2) {
+            pollObj.question = resp2.body.value[0].question;
+            pollObj.questionId = resp2.body.value[0].RowKey;
             
-            //get the questions for the poll
-            data.getEntitiesByPoll("Question", pollId, function (resp2) {
-                pollObj['question'] = resp2.body.value[0];
-                
-                //get the answers for the poll
-                data.getEntitiesByPoll("Answer", pollId, function (resp3) {
-                    pollObj['answers'] = resp3.body.value;
-                    pollObj.answers.sort(function(a, b){return a.order - b.order;});
-                    res.render('edit', pollObj); 
-                });
-            });   
+            //get the answers for the poll
+            data.getEntitiesByPoll("Answer", pollObj.pollId, function (resp3) {
+                pollObj.answers = resp3.body.value
+                pollObj.colors = config.colors;
+                pollObj.answers.sort(function(a, b){return a.order - b.order;});
+                console.log(pollObj);
+                res.render('edit', pollObj); 
+            });
+        });   
     });
 });
 
 //edit a poll
-router.post('/edit/:RowKey', function (req, res) {
-    var pollId = req.params.RowKey;
-    var postData = req.body;
-    
-    var answerObj = {"adds":[], "edits":[], "deletes":[]};
-    
-    for(var i=0; i < postData.answerId.length; i++){  
-        var props = {};
-        for (var key in postData) {
-            if (postData.hasOwnProperty(key)) {
-                props[key] = postData[key][i] || postData[key][0];
-            }
-        }
-        if(postData.answerId[i] == ""){                                          
-            if(postData.answers[i] != undefined) {
-                answerObj.adds.push(props);
-            }
-        }
-        else if(postData.answers[i] != undefined){
-            answerObj.edits.push(props);
-        }
-        else {
-            answerObj.deletes.push(props);
-        }
-    }
-    console.log(answerObj.deletes);
+router.post('/edit/:pollId', function (req, res) {
+    var pollObj = {pollId: req.params.pollId};
+    pollObj.title = req.body.title;
+    pollObj.answers = req.body.answers;
+    pollObj.colors = req.body.colors;
     
     //update the poll
-    data.editPoll(postData, function () {
+    data.editPoll(pollObj, function () {
+        pollObj.questionId = req.body.questionId;
+        pollObj.question = req.body.question;
         
         //update the questions
-        data.editQuestion(postData, function(resp2){
-            var questionId = resp2.RowKey;
-    
-            //create any new answers
-            data.createAnswers(answerObj.adds, function(){
+        data.editQuestion(pollObj, function(resp2){
+            
+            //delete the old answers
+            data.deleteEntitiesByPoll("Answer", pollObj, function(resp3){
                 
-                //delete any removed answers
-                //data.deleteAnswers(req.body, function(){
-                    
-                    //update the existing answers
-                    data.editAnswers(answerObj.edits, "none", function(){
-                        res.redirect('/view/'+pollId+'?mode=preview');
-                    }); 
-                //});
-                
+                //create new answers
+                data.createAnswers(pollObj, function(){
+                    res.redirect('/view/'+req.body.entityId+'?mode=preview');
+                });
             });
         });
     });
@@ -162,6 +157,7 @@ router.get('/donut/:pollId', function (req, res) {
 
 //route for resetting a poll (delete responses and reset totals)
 router.get('/reset/:pollId', function (req, res) {
+        /*
         var pollId = req.params.pollId;
         var pollObj = {};
         
@@ -177,6 +173,7 @@ router.get('/reset/:pollId', function (req, res) {
                 }    
             });
         });
+        */
 });
 
 module.exports = router;

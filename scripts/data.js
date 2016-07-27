@@ -24,6 +24,31 @@ module.exports = {
         });
     },
     
+    deleteEntitiesByPoll: function(entityType, entityInfo, callback) {
+        var batch = new azure.TableBatch();
+        
+        var query = new azure.TableQuery()
+            .where("PartitionKey eq ?", entityType)
+            .and("entityId eq ?", entityInfo.pollId)
+            
+        tableService.queryEntities(tableId, query, null, function (error, result, response) {
+            for (var i=0; i<result.entries.length; i++) {
+                batch.deleteEntity(result.entries[i], {echoContent:true});
+            }
+            if(batch.operations.length > 0){
+                tableService.executeBatch(tableId, batch, function (error, result, response) {
+                    if (!error) {
+                        callback(response);
+                    } if (error) {
+                        onError(error, callback);
+                    }
+                });
+            } else {
+                callback();
+            }
+        });      
+    },
+    
     //POLL FUNCTIONS
     getPoll: function(entityType, entityId, callback) {
         var query = new azure.TableQuery()
@@ -39,12 +64,12 @@ module.exports = {
         });
     },
     
-    createPoll : function(entityInfo, callback) {    
+    createPoll : function(pollInfo, callback) {    
         
         var entity = {
             PartitionKey: entGen.String("Poll"),
             RowKey: entGen.String(uuid.v1()),
-            title: entGen.String(entityInfo.title),
+            title: entGen.String(pollInfo.title),
             dateCreated: entGen.DateTime(new Date(Date.now()))
         };
     
@@ -58,12 +83,12 @@ module.exports = {
         });
     },
     
-    editPoll : function(entityInfo, callback) {         
+    editPoll : function(pollInfo, callback) {         
         
         var entity = {
             PartitionKey: entGen.String("Poll"),
-            RowKey: entGen.String(entityInfo.entityId[0]),
-            title: entGen.String(entityInfo.title[0])
+            RowKey: entGen.String(pollInfo.pollId),
+            title: entGen.String(pollInfo.title)
         };
     
         tableService.mergeEntity(tableId, entity, function (error, result, response) {
@@ -76,13 +101,13 @@ module.exports = {
     },
     
     //QUESTION FUNCTIONS
-    createQuestion : function(entityId, questionInfo, callback) {    
+    createQuestion : function(questionInfo, callback) {    
         
         var questionId = uuid.v4();
         var entity = {
             PartitionKey: entGen.String("Question"),
             RowKey: entGen.String(questionId),
-            entityId: entGen.String(entityId),
+            entityId: entGen.String(questionInfo.pollId),
             question: entGen.String(questionInfo.question)
         };
         
@@ -100,8 +125,8 @@ module.exports = {
         
         var entity = {
             PartitionKey: entGen.String("Question"),
-            RowKey: entGen.String(questionInfo.questionId[0]),
-            question: entGen.String(questionInfo.question[0])
+            RowKey: entGen.String(questionInfo.questionId),
+            question: entGen.String(questionInfo.question)
         };
     
         tableService.mergeEntity(tableId, entity, function (error, result, response) {
@@ -118,23 +143,24 @@ module.exports = {
     createAnswers : function(answerInfo, callback) {    
         var batch = new azure.TableBatch();
             
-            for(i=0; i<answerInfo.length; i++){
+            for(i=0; i < answerInfo.answers.length; i++){
                 var answerId = uuid.v4();
-        
+
                 var entity = {
                     PartitionKey: entGen.String("Answer"),
                     RowKey: entGen.String(answerId),
-                    entityId: entGen.String(answerInfo[i].entityId),
-                    questionId: entGen.String(answerInfo[i].questionId),
-                    answer: entGen.String(answerInfo[i].answers),
-                    color: entGen.String(answerInfo[i].colors),
+                    entityId: entGen.String(answerInfo.pollId),
+                    questionId: entGen.String(answerInfo.questionId),
+                    answer: entGen.String(answerInfo.answers[i]),
+                    color: entGen.String(answerInfo.colors[i]),
                     tally: entGen.Int32(0),
-                    order: entGen.Int32(answerInfo[i].order)
+                    order: entGen.Int32(i)
                 }
                 batch.insertEntity(entity, {echoContent:true});
             }
-        
-        if(batch.operations.count > 0) {    
+            
+        if(batch.operations.length > 0) {   
+             
             tableService.executeBatch(tableId, batch, function (error, result, response) {
                 if (!error) {
                     callback(response);
@@ -147,79 +173,29 @@ module.exports = {
         }
     },
     
-    editAnswers : function(answerInfo, operator, callback) {         
-        var batch = new azure.TableBatch();
+    updateTally : function(answerInfo, callback) {
         
-        for(i=0; i<answerInfo.length; i++){
-            
-            if(operator == "add")
-                answerInfo[i].tally++;
-            if(operator == "sub")
-                answerInfo[i].tally--;
-            if(operator == "reset")
-                answerInfo[i].tally = 0;
-             
-            var entity = {
-                PartitionKey: entGen.String("Answer"),
-                RowKey: entGen.String(answerInfo[i].answerId),
-                answer: entGen.String(answerInfo[i].answers),
-                color: entGen.String(answerInfo[i].colors),
-                tally: entGen.Int32(parseInt(answerInfo[i].tally)),
-                order: entGen.Int32(parseInt(answerInfo[i].order))
-            }
-                batch.mergeEntity(entity, {echoContent:true});    
+        if(answerInfo.tally != -1){
+            answerInfo.tally++;
         }
         
-        tableService.executeBatch(tableId, batch, function (error, result, response) {
-            if (!error) {
-                callback(response);
-            } if (error) {
-                onError(error, callback);
-            }
-        });
-        
-    },
+        var entity = {
+            PartitionKey: entGen.String("Answer"),
+            RowKey: entGen.String(answerInfo.answerId),
+            tally: entGen.String(answerInfo.tally || 0)
+        };
     
-    deleteAnswers : function(answerInfo, operator, callback) {         
-        var batch = new azure.TableBatch();
-        var noAnswers = answerInfo.answerId.length;
-        
-        for(i=0; i<noAnswers; i++){
- 
-            var entity = {
-                PartitionKey: entGen.String("Answer"),
-                RowKey: entGen.String(answerInfo.answerId[i])
-            }
-            
-            batch.deleteEntity(entity, {echoContent:true});
-        }
-        
-        tableService.executeBatch(tableId, batch, function (error, result, response) {
+        tableService.mergeEntity(tableId, entity, function (error, result, response) {
             if (!error) {
                 callback(response);
             } if (error) {
                 onError(error, callback);
             }
-        });
+        }); 
     },
     
     //RESPONSE FUNCTIONS
-    getResponsesByUser : function(entityId, user, callback){
-        var query = new azure.TableQuery()
-            .where('PartitionKey eq ?', 'Response')
-            .and('entityId eq ?', entityId)
-            .and('user eq ?', user);
-    
-        tableService.queryEntities(tableId, query, null, function (error, result, response) {
-            if (!error) {
-                callback(response);
-            } if (error) {
-                onError(error, callback);
-            }
-        });
-    },
-    
-    createResponses : function(entityId, responseInfo, user, callback) {
+    createResponses : function(responseInfo, callback) {
         var batch = new azure.TableBatch();
            
         for(var i=0; i<responseInfo.answer.length; i++) {
@@ -227,10 +203,10 @@ module.exports = {
             var entity = {
                 PartitionKey: entGen.String("Response"),
                 RowKey: entGen.String(responseId),
-                entityId: entGen.String(entityId),
-                questionId: entGen.String(responseInfo.questionId[i]),
-                response: entGen.String(responseInfo.answer[i]),
-                user: entGen.String(user),
+                entityId: entGen.String(responseInfo.pollId),
+                questionId: entGen.String(responseInfo.questionId),
+                response: entGen.String(responseInfo.answer),
+                user: entGen.String(responseInfo.user || "admin"),
                 dateCreated: entGen.DateTime(new Date(Date.now()))
             };
             batch.insertEntity(entity, {echoContent:true});
